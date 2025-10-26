@@ -5,32 +5,48 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Boodschappenlijst Week</title>
 <style>
-  body { font-family: Arial, sans-serif; display: flex; padding: 20px; }
-  .controls { flex: 1; max-width: 300px; margin-right: 20px; }
-  .shopping-list { flex: 2; background: #f7f7f7; padding: 20px; border-radius: 8px; }
-  select, button { width: 100%; margin-bottom: 10px; padding: 8px; font-size: 16px; }
+  body { font-family: Arial, sans-serif; display: flex; padding: 20px; flex-wrap: wrap; }
+  .controls { flex: 1; max-width: 350px; margin-right: 20px; }
+  .shopping-list { flex: 2; background: #f7f7f7; padding: 20px; border-radius: 8px; min-width: 250px; }
+  input, button { width: 100%; margin-bottom: 10px; padding: 8px; font-size: 16px; box-sizing: border-box; }
   h2 { margin-top: 0; }
   .section { margin-bottom: 15px; }
+  label { font-weight: bold; display: block; margin-top: 10px; }
 </style>
 </head>
 <body>
 
 <div class="controls">
   <h2>Selecteer recepten per dag</h2>
+
   <label>Maandag</label>
-  <select id="day1"></select>
+  <input list="day1List" id="day1" placeholder="Selecteer recept...">
+  <datalist id="day1List"></datalist>
+
   <label>Dinsdag</label>
-  <select id="day2"></select>
+  <input list="day2List" id="day2" placeholder="Selecteer recept...">
+  <datalist id="day2List"></datalist>
+
   <label>Woensdag</label>
-  <select id="day3"></select>
+  <input list="day3List" id="day3" placeholder="Selecteer recept...">
+  <datalist id="day3List"></datalist>
+
   <label>Donderdag</label>
-  <select id="day4"></select>
+  <input list="day4List" id="day4" placeholder="Selecteer recept...">
+  <datalist id="day4List"></datalist>
+
   <label>Vrijdag</label>
-  <select id="day5"></select>
+  <input list="day5List" id="day5" placeholder="Selecteer recept...">
+  <datalist id="day5List"></datalist>
+
   <label>Zaterdag</label>
-  <select id="day6"></select>
+  <input list="day6List" id="day6" placeholder="Selecteer recept...">
+  <datalist id="day6List"></datalist>
+
   <label>Zondag</label>
-  <select id="day7"></select>
+  <input list="day7List" id="day7" placeholder="Selecteer recept...">
+  <datalist id="day7List"></datalist>
+
   <button id="generate">OK</button>
 </div>
 
@@ -41,47 +57,48 @@
 
 <script>
 const recipes = {
+  "Geen": [],
   "Tomatenrisotto met spinazie en chorizo": [
-    {name: "Risottorijst", amount: 400, unit: "g", category: "Rijst/Couscous"},
+    {name: "Risottorijst", amount: 400, unit: "g", category: "Rijst/Couscous/Pasta"},
     {name: "Tomatenblokjes", amount: 1, unit: "blikje", category: "Groenten"},
     {name: "Ui", amount: 2, unit: "stuks", category: "Groenten"},
     {name: "Spinazie", amount: 400, unit: "g", category: "Groenten"},
     {name: "Citroen", amount: 1, unit: "stuk", category: "Groenten"},
-    {name: "Chorizoworst", amount: 200, unit: "g", category: "Vlees/Vis"},
+    {name: "Chorizo", amount: 200, unit: "g", category: "Vlees/Vis"},
     {name: "Kippenbouillon", amount: 1, unit: "l", category: "Overig"}
   ],
   "Tex-mex eenpanswok met gehakt en aardappel": [
     {name: "Rundergehakt", amount: 500, unit: "g", category: "Vlees/Vis"},
-    {name: "Opbakaardappeltjes", amount: 600, unit: "g", category: "Groenten"},
+    {name: "Aardappelen", amount: 600, unit: "g", category: "Groenten"},
     {name: "Mexicaanse roerbakgroenten", amount: 800, unit: "g", category: "Groenten"},
-    {name: "Geraspte cheddar", amount: 150, unit: "g", category: "Zuivel"},
+    {name: "Cheddar", amount: 150, unit: "g", category: "Zuivel"},
     {name: "Zure room", amount: 125, unit: "g", category: "Zuivel"},
-    {name: "Verse guacamole", amount: 150, unit: "g", category: "Groenten"},
-    {name: "Tacokruiden", amount: 1, unit: "zakje", category: "Overig"},
+    {name: "Guacamole", amount: 150, unit: "g", category: "Groenten"},
+    {name: "Tacokruiden", amount: 1, unit: "zakje", category: "Kruiden"},
     {name: "Koriander", amount: 15, unit: "g", category: "Groenten"},
     {name: "Olijfolie", amount: 2, unit: "el", category: "Overig"},
-    {name: "Zwarte peper", amount: 0, unit: "", category: "Overig"},
-    {name: "Zout", amount: 0, unit: "", category: "Overig"}
+    {name: "Zwarte peper", amount: 0, unit: "", category: "Kruiden"},
+    {name: "Zout", amount: 0, unit: "", category: "Kruiden"}
   ],
   "Vissticks met spinazie à la crème en krieltjes": [
     {name: "Vissticks", amount: 20, unit: "stuks", category: "Vlees/Vis"},
-    {name: "Spinazie à la crème", amount: 750, unit: "g", category: "Groenten"},
-    {name: "Mini krieltjes", amount: 900, unit: "g", category: "Groenten"},
+    {name: "Spinazie", amount: 750, unit: "g", category: "Groenten"},
+    {name: "Krieltjes", amount: 900, unit: "g", category: "Groenten"},
     {name: "Appelmoes", amount: 0, unit: "naar smaak", category: "Groenten"},
     {name: "Olijfolie", amount: 4, unit: "el", category: "Overig"},
-    {name: "Zout", amount: 0, unit: "naar smaak", category: "Overig"},
-    {name: "Zwarte peper", amount: 0, unit: "naar smaak", category: "Overig"}
+    {name: "Zout", amount: 0, unit: "naar smaak", category: "Kruiden"},
+    {name: "Zwarte peper", amount: 0, unit: "naar smaak", category: "Kruiden"}
   ],
   "Ovenschotel met gehakt broccoli": [
     {name: "Broccoli", amount: 1, unit: "stuk", category: "Groenten"},
     {name: "Aardappelen", amount: 800, unit: "g", category: "Groenten"},
     {name: "Spek", amount: 150, unit: "g", category: "Vlees/Vis"},
-    {name: "Gehakt", amount: 500, unit: "g", category: "Vlees/Vis"},
+    {name: "Rundergehakt", amount: 500, unit: "g", category: "Vlees/Vis"},
     {name: "Ui", amount: 1, unit: "stuk", category: "Groenten"},
     {name: "Knoflook", amount: 2, unit: "teentjes", category: "Groenten"},
-    {name: "Gehaktkruiden", amount: 1, unit: "zakje", category: "Overig"},
-    {name: "Zout", amount: 0, unit: "", category: "Overig"},
-    {name: "Peper", amount: 0, unit: "", category: "Overig"},
+    {name: "Gehaktkruiden", amount: 1, unit: "zakje", category: "Kruiden"},
+    {name: "Zout", amount: 0, unit: "", category: "Kruiden"},
+    {name: "Peper", amount: 0, unit: "", category: "Kruiden"},
     {name: "Roomboter", amount: 25, unit: "g", category: "Zuivel"},
     {name: "Crème fraîche", amount: 200, unit: "ml", category: "Zuivel"},
     {name: "Olijfolie", amount: 2, unit: "el", category: "Overig"}
@@ -90,29 +107,29 @@ const recipes = {
     {name: "Kikkererwten", amount: 400, unit: "g", category: "Groenten"},
     {name: "Ui", amount: 1, unit: "stuk", category: "Groenten"},
     {name: "Knoflook", amount: 1.5, unit: "teentjes", category: "Groenten"},
-    {name: "Kerriepoeder", amount: 1, unit: "el", category: "Overig"},
+    {name: "Kerriepoeder", amount: 1, unit: "el", category: "Kruiden"},
     {name: "Kokosmelk", amount: 200, unit: "ml", category: "Zuivel"},
     {name: "Tomatenblokjes", amount: 1, unit: "blikje", category: "Groenten"},
-    {name: "Couscous", amount: 300, unit: "g", category: "Rijst/Couscous"},
+    {name: "Couscous", amount: 300, unit: "g", category: "Rijst/Couscous/Pasta"},
     {name: "Water", amount: 0, unit: "volgens verpakking", category: "Overig"},
     {name: "Olijfolie", amount: 2, unit: "el", category: "Overig"},
-    {name: "Zout / Peper", amount: 0, unit: "naar smaak", category: "Overig"}
+    {name: "Zout / Peper", amount: 0, unit: "naar smaak", category: "Kruiden"}
   ],
   "Hutspot met speklapjes": [
-    {name: "Aardappel", amount: 1000, unit: "g", category: "Groenten"},
+    {name: "Aardappelen", amount: 1000, unit: "g", category: "Groenten"},
     {name: "Hutspotgroenten", amount: 500, unit: "g", category: "Groenten"},
     {name: "Ui", amount: 2, unit: "stuks", category: "Groenten"},
     {name: "Olijfolie", amount: 2, unit: "el", category: "Overig"},
     {name: "Speklapjes", amount: 2, unit: "stuks", category: "Vlees/Vis"}
   ],
   "Pasta pesto": [
-    {name: "Pasta", amount: 300, unit: "g", category: "Rijst/Couscous"},
+    {name: "Pasta", amount: 300, unit: "g", category: "Rijst/Couscous/Pasta"},
     {name: "Kipfilet", amount: 400, unit: "g", category: "Vlees/Vis"},
     {name: "Ui", amount: 1, unit: "stuk", category: "Groenten"},
     {name: "Kookroom", amount: 250, unit: "ml", category: "Zuivel"},
-    {name: "Cherry tomaatjes", amount: 250, unit: "g", category: "Groenten"},
-    {name: "Peper", amount: 0, unit: "", category: "Overig"},
-    {name: "Zout", amount: 0, unit: "", category: "Overig"},
+    {name: "Cherry tomaten", amount: 250, unit: "g", category: "Groenten"},
+    {name: "Peper", amount: 0, unit: "", category: "Kruiden"},
+    {name: "Zout", amount: 0, unit: "", category: "Kruiden"},
     {name: "Olijfolie", amount: 0, unit: "scheutje", category: "Overig"},
     {name: "Pijnboompitten", amount: 60, unit: "g", category: "Overig"},
     {name: "Rucola", amount: 0, unit: "handje", category: "Groenten"},
@@ -121,39 +138,63 @@ const recipes = {
   "Prei schotel": [
     {name: "Prei", amount: 500, unit: "g", category: "Groenten"},
     {name: "Rode paprika", amount: 1, unit: "stuk", category: "Groenten"},
-    {name: "Aardappelschijfjes", amount: 600, unit: "g", category: "Groenten"},
-    {name: "Mager gehakt", amount: 300, unit: "g", category: "Vlees/Vis"},
+    {name: "Aardappelen", amount: 600, unit: "g", category: "Groenten"},
+    {name: "Rundergehakt", amount: 300, unit: "g", category: "Vlees/Vis"},
     {name: "Ei", amount: 1, unit: "stuk", category: "Overig"},
-    {name: "Kookroom (light)", amount: 125, unit: "ml", category: "Zuivel"},
-    {name: "Groente in totaal", amount: 650, unit: "g", category: "Groenten"},
+    {name: "Kookroom", amount: 125, unit: "ml", category: "Zuivel"},
     {name: "Maggi Prei-Kerrie mix", amount: 1, unit: "pakje", category: "Overig"}
   ],
   "Kip Siam": [
     {name: "Kipfilet", amount: 250, unit: "g", category: "Vlees/Vis"},
-    {name: "Wokgroente", amount: 700, unit: "g", category: "Groenten"},
+    {name: "Wokgroenten", amount: 700, unit: "g", category: "Groenten"},
     {name: "Olie", amount: 1, unit: "el", category: "Overig"},
-    {name: "Kip Siam doosje Honig", amount: 1, unit: "stuk", category: "Overig"}
+    {name: "Kip Siam mix", amount: 1, unit: "stuk", category: "Overig"}
+  ],
+  "Stroganov schotel": [
+    {name: "Kipgehakt", amount: 600, unit: "g", category: "Vlees/Vis"},
+    {name: "Rode paprika", amount: 2, unit: "stuks", category: "Groenten"},
+    {name: "Ui", amount: 2, unit: "stuks", category: "Groenten"},
+    {name: "Champignons", amount: 1, unit: "bakje", category: "Groenten"},
+    {name: "Crème fraîche", amount: 500, unit: "ml", category: "Zuivel"},
+    {name: "Peper", amount: 0, unit: "", category: "Kruiden"},
+    {name: "Zout", amount: 0, unit: "", category: "Kruiden"},
+    {name: "Paprikapoeder", amount: 0, unit: "", category: "Kruiden"},
+    {name: "Kippenbouillonblokjes", amount: 3, unit: "stuks", category: "Kruiden"},
+    {name: "Tomatenpuree", amount: 1, unit: "blikje", category: "Groenten"},
+    {name: "Water", amount: 150, unit: "ml", category: "Overig"}
   ]
 };
 
-// Populate dropdowns
+// Populate dropdowns with "Geen" default
 const days = ["day1","day2","day3","day4","day5","day6","day7"];
 const recipeNames = Object.keys(recipes);
+
+// Populate datalists for mobile-friendly searchable dropdowns
 days.forEach(day => {
-  const select = document.getElementById(day);
+  const dataList = document.getElementById(day + "List");
+
+  // Voeg recepten toe aan datalist
   recipeNames.forEach(r => {
     const option = document.createElement("option");
     option.value = r;
-    option.text = r;
-    select.add(option);
+    dataList.appendChild(option);
   });
+
+  // Laat input leeg (geen visuele "Geen")
+  document.getElementById(day).value = "";
 });
 
+// Generate shopping list
 document.getElementById("generate").addEventListener("click", () => {
-  const selected = days.map(d => document.getElementById(d).value);
+  const selected = days.map(d => {
+    const val = document.getElementById(d).value.trim();
+    return val === "" ? "Geen" : val; // Als leeg, default naar "Geen"
+  });
+
   const aggregated = {};
 
   selected.forEach(r => {
+    if(r === "Geen") return; // skip "Geen"
     recipes[r].forEach(item => {
       const key = item.name + " (" + item.unit + ")";
       if (!aggregated[item.category]) aggregated[item.category] = {};
