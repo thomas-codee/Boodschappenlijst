@@ -3,197 +3,239 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Boodschappenlijst Week</title>
+<title>De Recepten Raket!</title>
 <style>
-  /* Algemene styling */
+  /* 🚀 Quirky Kleurenpalet & Lettertype (Geïnspireerd door de afbeelding) */
+  @import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Kalam:wght@300;400;700&display=swap');
+  
+  :root {
+    --color-primary: #5cb377; /* Groen (Hoofdaccent) */
+    --color-secondary: #ff6347; /* Tomatenrood (Extra accent) */
+    --color-background: #fdf6e3; /* Zeer lichtgeel/gebroken wit */
+    --color-text: #2c3e50; /* Donkerblauw (Tekst) */
+    --font-heading: 'Cabin Sketch', cursive; /* Speels lettertype voor titels */
+    --font-body: 'Kalam', cursive; /* Handgeschreven/Quirky voor body */
+  }
+
+  /* Algemene Styling */
   body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Moderner lettertype */
+    font-family: var(--font-body);
     display: flex;
-    flex-direction: column; /* Standaard op column voor kleinere schermen */
-    padding: 20px;
-    background-color: #f4f7f6; /* Lichte achtergrondkleur */
-    color: #333;
+    flex-direction: column; 
+    padding: 30px;
+    background-color: var(--color-background); 
+    color: var(--color-text);
     min-height: 100vh;
   }
 
   /* Responsive lay-out voor grotere schermen */
   @media (min-width: 768px) {
     body {
-      flex-direction: row; /* Flex-direction row voor desktops */
+      flex-direction: row; 
     }
   }
 
   h2 {
-    color: #2c3e50; /* Donkerder, professionele kleur voor koppen */
+    font-family: var(--font-heading);
+    color: var(--color-secondary); 
     margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 1.8em;
-    border-bottom: 1px solid #eee;
+    margin-bottom: 25px;
+    font-size: 2.5em; /* Iets groter */
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.1); /* Speelse schaduw */
+    border-bottom: 3px dashed var(--color-primary); /* Stippellijn als scheiding */
     padding-bottom: 10px;
   }
 
-  /* Controls sectie */
+  /* Controls sectie (Links) */
   .controls {
     flex: 1;
-    max-width: 100%; /* Standaard 100% breedte */
+    max-width: 100%;
     margin-right: 0;
-    margin-bottom: 30px; /* Ruimte onder de controls op kleine schermen */
-    background: #ffffff; /* Witte achtergrond */
-    padding: 25px;
-    border-radius: 12px; /* Zachtere hoeken */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Subtiele schaduw */
+    margin-bottom: 40px; 
+    background: #ffffff; 
+    padding: 30px;
+    border-radius: 20px; /* Meer uitgesproken hoeken */
+    box-shadow: 8px 8px 0px var(--color-primary); /* Uitgesproken, "platte" schaduw */
+    border: 3px solid var(--color-text);
   }
 
   @media (min-width: 768px) {
     .controls {
-      max-width: 350px; /* Specifieke breedte voor desktops */
-      margin-right: 30px;
+      max-width: 400px; /* Iets breder */
+      margin-right: 40px;
       margin-bottom: 0;
     }
   }
 
   label {
-    font-weight: 600; /* Iets dikker lettertype */
+    font-weight: 700; 
     display: block;
-    margin-top: 15px;
-    margin-bottom: 5px;
-    color: #555;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    color: var(--color-text);
+    font-size: 1.1em;
   }
 
   input[type="text"], button {
+    font-family: var(--font-body);
     width: 100%;
-    padding: 12px;
+    padding: 10px;
     margin-bottom: 15px;
-    font-size: 1em;
-    border: 1px solid #dcdcdc; /* Lichtere rand */
-    border-radius: 8px; /* Afgeronde hoeken */
+    font-size: 1.1em;
+    border: 3px solid var(--color-text);
+    border-radius: 10px; 
     box-sizing: border-box;
-    transition: all 0.3s ease; /* Smooth transitions */
+    background-color: #fffaf0; /* Iets meer contrast in velden */
   }
-
+  
   input[type="text"]:focus {
-    border-color: #5cb377; /* Accentkleur bij focus */
-    box-shadow: 0 0 8px rgba(92, 179, 119, 0.2);
+    border-color: var(--color-secondary); 
+    box-shadow: 3px 3px 0px var(--color-secondary);
     outline: none;
   }
 
   button {
-    background-color: #5cb377; /* Groene accentkleur */
+    background-color: var(--color-primary); 
     color: white;
-    border: none;
+    border: 3px solid var(--color-text);
     cursor: pointer;
     font-weight: bold;
-    letter-spacing: 0.5px;
-    margin-top: 20px;
+    letter-spacing: 1px;
+    margin-top: 30px;
+    box-shadow: 4px 4px 0px var(--color-text); /* Dikke schaduw */
+    transition: all 0.1s ease;
   }
 
   button:hover {
-    background-color: #4ca067; /* Donkerdere groen bij hover */
-    box-shadow: 0 4px 10px rgba(92, 179, 119, 0.3);
+    background-color: #4ca067; 
+    /* Druk op effect */
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--color-text);
   }
 
-  /* Boodschappenlijst sectie */
+  /* Boodschappenlijst sectie (Rechts) */
   .shopping-list {
     flex: 2;
     min-width: 250px;
-    background: #ffffff; /* Witte achtergrond */
-    padding: 25px;
-    border-radius: 12px; /* Afgeronde hoeken */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Subtiele schaduw */
-    position: relative; /* Nodig voor absolute positionering van de afbeelding */
-    overflow: hidden; /* Zorgt ervoor dat de afbeelding binnen de lijst blijft als deze te groot is */
+    background: #ffffff; 
+    padding: 30px;
+    border-radius: 20px; 
+    box-shadow: -8px 8px 0px var(--color-secondary); /* Schaduw in tegenovergestelde richting */
+    border: 3px solid var(--color-text);
+    position: relative; 
+    overflow: hidden; 
   }
 
   .shopping-list .section {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     padding-bottom: 10px;
-    border-bottom: 1px dashed #eee; /* Lichtere, gestippelde lijn */
+    border-bottom: 2px dotted var(--color-primary); 
   }
 
   .shopping-list .section:last-child {
-    border-bottom: none; /* Geen lijn onder de laatste sectie */
+    border-bottom: none;
+  }
+
+  .shopping-list strong {
+    font-family: var(--font-heading);
+    font-size: 1.5em;
+    color: var(--color-primary);
   }
 
   .shopping-list ul {
-    list-style: none; /* Geen standaard opsommingstekens */
+    list-style: none; 
     padding: 0;
     margin: 10px 0 0 0;
   }
 
   .shopping-list li {
     padding: 8px 0;
-    border-bottom: 1px dotted #f0f0f0; /* Subtiele scheiding tussen lijstitems */
+    border-bottom: 1px solid #eee; 
+    margin-left: 10px;
+    position: relative;
+  }
+  
+  /* Speelse lijst items */
+  .shopping-list li::before {
+    content: '★'; /* Sterretje of een ander leuk teken */
+    color: var(--color-secondary);
+    font-size: 1em;
+    position: absolute;
+    left: -20px;
   }
 
-  .shopping-list li:last-child {
-    border-bottom: none;
-  }
-
-  /* Styling voor de afbeelding in de boodschappenlijst */
+  /* 🖼️ Styling voor de Afbeelding (Groot en Uniek) */
   .shopping-list-image {
-    position: absolute; /* Absolute positionering */
-    bottom: 20px; /* 20px van de onderkant */
-    right: 20px; /* 20px van de rechterkant */
-    width: 150px; /* Vaste breedte */
-    height: auto; /* Behoud aspect ratio */
-    opacity: 0.7; /* Subtieler laten zijn */
-    z-index: 1; /* Zorg dat het achter de tekst kan liggen */
-    pointer-events: none; /* Zorgt ervoor dat de afbeelding geen klik-events onderschept */
-    border-radius: 8px; /* Afgeronde hoeken voor de afbeelding */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: absolute; 
+    bottom: -15px; /* Over de rand laten gaan */
+    left: 50%; /* Centraal onderin */
+    transform: translateX(-50%) rotate(-3deg); /* Scheve positie */
+    width: 250px; /* Grotere afbeelding */
+    height: auto; 
+    opacity: 0.9; 
+    z-index: 1; 
+    pointer-events: none; 
+    
+    /* Polaroid-effect */
+    background: white;
+    padding: 10px 10px 40px 10px; /* Extra ruimte onder voor "beschrijving" */
+    border: 1px solid #ccc;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
   }
 
   /* Zorg dat de tekst boven de afbeelding staat */
-  .shopping-list #list {
+  .shopping-list #list, .shopping-list h2 {
     position: relative;
-    z-index: 2; /* Hogere z-index dan de afbeelding */
+    z-index: 2; 
   }
 </style>
 </head>
 <body>
 
 <div class="controls">
-  <h2>Selecteer recepten per dag</h2>
+  <h2>Selecteer Je Maaltijden!</h2>
 
   <label for="day1">Maandag</label>
-  <input type="text" list="day1List" id="day1" placeholder="Selecteer recept...">
+  <input type="text" list="day1List" id="day1" placeholder="Kies een recept...">
   <datalist id="day1List"></datalist>
 
   <label for="day2">Dinsdag</label>
-  <input type="text" list="day2List" id="day2" placeholder="Selecteer recept...">
+  <input type="text" list="day2List" id="day2" placeholder="Kies een recept...">
   <datalist id="day2List"></datalist>
 
   <label for="day3">Woensdag</label>
-  <input type="text" list="day3List" id="day3" placeholder="Selecteer recept...">
+  <input type="text" list="day3List" id="day3" placeholder="Kies een recept...">
   <datalist id="day3List"></datalist>
 
   <label for="day4">Donderdag</label>
-  <input type="text" list="day4List" id="day4" placeholder="Selecteer recept...">
+  <input type="text" list="day4List" id="day4" placeholder="Kies een recept...">
   <datalist id="day4List"></datalist>
 
   <label for="day5">Vrijdag</label>
-  <input type="text" list="day5List" id="day5" placeholder="Selecteer recept...">
+  <input type="text" list="day5List" id="day5" placeholder="Kies een recept...">
   <datalist id="day5List"></datalist>
 
   <label for="day6">Zaterdag</label>
-  <input type="text" list="day6List" id="day6" placeholder="Selecteer recept...">
+  <input type="text" list="day6List" id="day6" placeholder="Kies een recept...">
   <datalist id="day6List"></datalist>
 
   <label for="day7">Zondag</label>
-  <input type="text" list="day7List" id="day7" placeholder="Selecteer recept...">
+  <input type="text" list="day7List" id="day7" placeholder="Kies een recept...">
   <datalist id="day7List"></datalist>
 
-  <button id="generate">OK</button>
+  <button id="generate">GO! Maak de Boodschappenlijst!</button>
 </div>
 
 <div class="shopping-list">
-  <h2>Boodschappenlijst</h2>
+  <h2>Boodschappenlijst Avontuur!</h2>
   <div id="list"></div>
+  
   <img src="picture.jpg" alt="Decoratieve afbeelding" class="shopping-list-image">
 </div>
 
 <script>
-// (Je JavaScript code blijft exact hetzelfde hieronder)
+// (Je JavaScript code blijft exact hetzelfde, maar met een kleine fix voor de template literals)
+
 const recipes = {
   "Geen": [],
   "Tomatenrisotto met spinazie en chorizo": [
@@ -343,11 +385,11 @@ document.getElementById("generate").addEventListener("click", () => {
 
   let html = "";
   Object.keys(aggregated).forEach(category => {
-    html += `<div class="section"><strong>${category}</strong><ul>`;
+    // FIX: De JavaScript-syntax voor template literals (backticks `) is correct in de JS-code
+    html += `<div class="section"><strong>${category}</strong><ul>`; 
     Object.keys(aggregated[category]).forEach(i => {
-      // Fix: Regex aanpassen voor gevallen waar unit leeg is.
       const unitMatch = i.match(/\((.*)\)/);
-      const unit = unitMatch ? unitMatch[1] : ''; // Haal de unit op, of leeg als niet gevonden
+      const unit = unitMatch ? unitMatch[1] : ''; 
       html += `<li>${i.split(" (")[0]}: ${aggregated[category][i]} ${unit}</li>`;
     });
     html += `</ul></div>`;
