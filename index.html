@@ -5,13 +5,149 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Boodschappenlijst Week</title>
 <style>
-  body { font-family: Arial, sans-serif; display: flex; padding: 20px; flex-wrap: wrap; }
-  .controls { flex: 1; max-width: 350px; margin-right: 20px; }
-  .shopping-list { flex: 2; background: #f7f7f7; padding: 20px; border-radius: 8px; min-width: 250px; }
-  input, button { width: 100%; margin-bottom: 10px; padding: 8px; font-size: 16px; box-sizing: border-box; }
-  h2 { margin-top: 0; }
-  .section { margin-bottom: 15px; }
-  label { font-weight: bold; display: block; margin-top: 10px; }
+  /* Algemene styling */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Moderner lettertype */
+    display: flex;
+    flex-direction: column; /* Standaard op column voor kleinere schermen */
+    padding: 20px;
+    background-color: #f4f7f6; /* Lichte achtergrondkleur */
+    color: #333;
+    min-height: 100vh;
+  }
+
+  /* Responsive lay-out voor grotere schermen */
+  @media (min-width: 768px) {
+    body {
+      flex-direction: row; /* Flex-direction row voor desktops */
+    }
+  }
+
+  h2 {
+    color: #2c3e50; /* Donkerder, professionele kleur voor koppen */
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+  }
+
+  /* Controls sectie */
+  .controls {
+    flex: 1;
+    max-width: 100%; /* Standaard 100% breedte */
+    margin-right: 0;
+    margin-bottom: 30px; /* Ruimte onder de controls op kleine schermen */
+    background: #ffffff; /* Witte achtergrond */
+    padding: 25px;
+    border-radius: 12px; /* Zachtere hoeken */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Subtiele schaduw */
+  }
+
+  @media (min-width: 768px) {
+    .controls {
+      max-width: 350px; /* Specifieke breedte voor desktops */
+      margin-right: 30px;
+      margin-bottom: 0;
+    }
+  }
+
+  label {
+    font-weight: 600; /* Iets dikker lettertype */
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    color: #555;
+  }
+
+  input[type="text"], button {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    font-size: 1em;
+    border: 1px solid #dcdcdc; /* Lichtere rand */
+    border-radius: 8px; /* Afgeronde hoeken */
+    box-sizing: border-box;
+    transition: all 0.3s ease; /* Smooth transitions */
+  }
+
+  input[type="text"]:focus {
+    border-color: #5cb377; /* Accentkleur bij focus */
+    box-shadow: 0 0 8px rgba(92, 179, 119, 0.2);
+    outline: none;
+  }
+
+  button {
+    background-color: #5cb377; /* Groene accentkleur */
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    margin-top: 20px;
+  }
+
+  button:hover {
+    background-color: #4ca067; /* Donkerdere groen bij hover */
+    box-shadow: 0 4px 10px rgba(92, 179, 119, 0.3);
+  }
+
+  /* Boodschappenlijst sectie */
+  .shopping-list {
+    flex: 2;
+    min-width: 250px;
+    background: #ffffff; /* Witte achtergrond */
+    padding: 25px;
+    border-radius: 12px; /* Afgeronde hoeken */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Subtiele schaduw */
+    position: relative; /* Nodig voor absolute positionering van de afbeelding */
+    overflow: hidden; /* Zorgt ervoor dat de afbeelding binnen de lijst blijft als deze te groot is */
+  }
+
+  .shopping-list .section {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #eee; /* Lichtere, gestippelde lijn */
+  }
+
+  .shopping-list .section:last-child {
+    border-bottom: none; /* Geen lijn onder de laatste sectie */
+  }
+
+  .shopping-list ul {
+    list-style: none; /* Geen standaard opsommingstekens */
+    padding: 0;
+    margin: 10px 0 0 0;
+  }
+
+  .shopping-list li {
+    padding: 8px 0;
+    border-bottom: 1px dotted #f0f0f0; /* Subtiele scheiding tussen lijstitems */
+  }
+
+  .shopping-list li:last-child {
+    border-bottom: none;
+  }
+
+  /* Styling voor de afbeelding in de boodschappenlijst */
+  .shopping-list-image {
+    position: absolute; /* Absolute positionering */
+    bottom: 20px; /* 20px van de onderkant */
+    right: 20px; /* 20px van de rechterkant */
+    width: 150px; /* Vaste breedte */
+    height: auto; /* Behoud aspect ratio */
+    opacity: 0.7; /* Subtieler laten zijn */
+    z-index: 1; /* Zorg dat het achter de tekst kan liggen */
+    pointer-events: none; /* Zorgt ervoor dat de afbeelding geen klik-events onderschept */
+    border-radius: 8px; /* Afgeronde hoeken voor de afbeelding */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Zorg dat de tekst boven de afbeelding staat */
+  .shopping-list #list {
+    position: relative;
+    z-index: 2; /* Hogere z-index dan de afbeelding */
+  }
 </style>
 </head>
 <body>
@@ -19,32 +155,32 @@
 <div class="controls">
   <h2>Selecteer recepten per dag</h2>
 
-  <label>Maandag</label>
-  <input list="day1List" id="day1" placeholder="Selecteer recept...">
+  <label for="day1">Maandag</label>
+  <input type="text" list="day1List" id="day1" placeholder="Selecteer recept...">
   <datalist id="day1List"></datalist>
 
-  <label>Dinsdag</label>
-  <input list="day2List" id="day2" placeholder="Selecteer recept...">
+  <label for="day2">Dinsdag</label>
+  <input type="text" list="day2List" id="day2" placeholder="Selecteer recept...">
   <datalist id="day2List"></datalist>
 
-  <label>Woensdag</label>
-  <input list="day3List" id="day3" placeholder="Selecteer recept...">
+  <label for="day3">Woensdag</label>
+  <input type="text" list="day3List" id="day3" placeholder="Selecteer recept...">
   <datalist id="day3List"></datalist>
 
-  <label>Donderdag</label>
-  <input list="day4List" id="day4" placeholder="Selecteer recept...">
+  <label for="day4">Donderdag</label>
+  <input type="text" list="day4List" id="day4" placeholder="Selecteer recept...">
   <datalist id="day4List"></datalist>
 
-  <label>Vrijdag</label>
-  <input list="day5List" id="day5" placeholder="Selecteer recept...">
+  <label for="day5">Vrijdag</label>
+  <input type="text" list="day5List" id="day5" placeholder="Selecteer recept...">
   <datalist id="day5List"></datalist>
 
-  <label>Zaterdag</label>
-  <input list="day6List" id="day6" placeholder="Selecteer recept...">
+  <label for="day6">Zaterdag</label>
+  <input type="text" list="day6List" id="day6" placeholder="Selecteer recept...">
   <datalist id="day6List"></datalist>
 
-  <label>Zondag</label>
-  <input list="day7List" id="day7" placeholder="Selecteer recept...">
+  <label for="day7">Zondag</label>
+  <input type="text" list="day7List" id="day7" placeholder="Selecteer recept...">
   <datalist id="day7List"></datalist>
 
   <button id="generate">OK</button>
@@ -53,9 +189,11 @@
 <div class="shopping-list">
   <h2>Boodschappenlijst</h2>
   <div id="list"></div>
+  <img src="picture.jpg" alt="Decoratieve afbeelding" class="shopping-list-image">
 </div>
 
 <script>
+// (Je JavaScript code blijft exact hetzelfde hieronder)
 const recipes = {
   "Geen": [],
   "Tomatenrisotto met spinazie en chorizo": [
@@ -207,7 +345,10 @@ document.getElementById("generate").addEventListener("click", () => {
   Object.keys(aggregated).forEach(category => {
     html += `<div class="section"><strong>${category}</strong><ul>`;
     Object.keys(aggregated[category]).forEach(i => {
-      html += `<li>${i.split(" (")[0]}: ${aggregated[category][i]} ${i.match(/\((.*)\)/)[1]}</li>`;
+      // Fix: Regex aanpassen voor gevallen waar unit leeg is.
+      const unitMatch = i.match(/\((.*)\)/);
+      const unit = unitMatch ? unitMatch[1] : ''; // Haal de unit op, of leeg als niet gevonden
+      html += `<li>${i.split(" (")[0]}: ${aggregated[category][i]} ${unit}</li>`;
     });
     html += `</ul></div>`;
   });
