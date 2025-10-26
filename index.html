@@ -1,124 +1,179 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Index Page</title>
-    <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Custom Tailwind Configuration -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#4f46e5', // Indigo 600
-                        'secondary': '#facc15', // Amber 400
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
-    <style>
-        /* Optional: Use Inter font globally */
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boodschappenlijst Week</title>
+<style>
+  body { font-family: Arial, sans-serif; display: flex; padding: 20px; }
+  .controls { flex: 1; max-width: 300px; margin-right: 20px; }
+  .shopping-list { flex: 2; background: #f7f7f7; padding: 20px; border-radius: 8px; }
+  select, button { width: 100%; margin-bottom: 10px; padding: 8px; font-size: 16px; }
+  h2 { margin-top: 0; }
+  .section { margin-bottom: 15px; }
+</style>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+<body>
 
-    <!-- Main Content Card -->
-    <div class="w-full max-w-lg bg-white shadow-xl rounded-xl overflow-hidden transform transition duration-500 hover:shadow-2xl">
-        
-        <!-- Header Section -->
-        <header class="bg-primary p-6 rounded-t-xl">
-            <h1 class="text-3xl font-extrabold text-white text-center tracking-tight">
-                Welcome to My Simple Page
-            </h1>
-        </header>
+<div class="controls">
+  <h2>Selecteer recepten per dag</h2>
+  <label>Maandag</label>
+  <select id="day1"></select>
+  <label>Dinsdag</label>
+  <select id="day2"></select>
+  <label>Woensdag</label>
+  <select id="day3"></select>
+  <label>Donderdag</label>
+  <select id="day4"></select>
+  <label>Vrijdag</label>
+  <select id="day5"></select>
+  <label>Zaterdag</label>
+  <select id="day6"></select>
+  <label>Zondag</label>
+  <select id="day7"></select>
+  <button id="generate">OK</button>
+</div>
 
-        <!-- Body Section -->
-        <div class="p-8 space-y-6">
-            <p class="text-gray-700 text-lg leading-relaxed">
-                This is a fully responsive single-file HTML document. We've used **Tailwind CSS** to make it look great across all devices—from mobile phones to large desktops. The layout automatically adapts, ensuring a smooth user experience without horizontal scrolling.
-            </p>
+<div class="shopping-list">
+  <h2>Boodschappenlijst</h2>
+  <div id="list"></div>
+</div>
 
-            <div class="border-t border-gray-200 pt-6">
-                <h2 class="text-xl font-semibold text-gray-800 flex items-center mb-3">
-                    <svg class="w-6 h-6 text-secondary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1v-3.25m-7.25 0h11.5m-11.5 0h11.5"></path></svg>
-                    Key Features
-                </h2>
-                <ul class="list-none space-y-2 text-gray-600">
-                    <li class="flex items-start">
-                        <span class="text-primary mr-2">&#10003;</span>
-                        <span>**Single File Mandate:** Everything (HTML, CSS, JS) is in this one document.</span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="text-primary mr-2">&#10003;</span>
-                        <span>**Responsive Design:** Looks good on mobile, tablet, and desktop.</span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="text-primary mr-2">&#10003;</span>
-                        <span>**Modern Styling:** Uses the Inter font and rounded corners for aesthetics.</span>
-                    </li>
-                </ul>
-            </div>
-            
-            <!-- Example Button -->
-            <div class="pt-4 text-center">
-                <button 
-                    id="actionButton"
-                    class="w-full sm:w-auto px-6 py-3 bg-secondary text-gray-900 font-bold rounded-lg shadow-md hover:bg-yellow-500 transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-yellow-300"
-                    onclick="showMessage()"
-                >
-                    Click Me!
-                </button>
-            </div>
-        </div>
+<script>
+const recipes = {
+  "Tomatenrisotto met spinazie en chorizo": [
+    {name: "Risottorijst", amount: 400, unit: "g", category: "Rijst/Couscous"},
+    {name: "Tomatenblokjes", amount: 1, unit: "blikje", category: "Groenten"},
+    {name: "Ui", amount: 2, unit: "stuks", category: "Groenten"},
+    {name: "Spinazie", amount: 400, unit: "g", category: "Groenten"},
+    {name: "Citroen", amount: 1, unit: "stuk", category: "Groenten"},
+    {name: "Chorizoworst", amount: 200, unit: "g", category: "Vlees/Vis"},
+    {name: "Kippenbouillon", amount: 1, unit: "l", category: "Overig"}
+  ],
+  "Tex-mex eenpanswok met gehakt en aardappel": [
+    {name: "Rundergehakt", amount: 500, unit: "g", category: "Vlees/Vis"},
+    {name: "Opbakaardappeltjes", amount: 600, unit: "g", category: "Groenten"},
+    {name: "Mexicaanse roerbakgroenten", amount: 800, unit: "g", category: "Groenten"},
+    {name: "Geraspte cheddar", amount: 150, unit: "g", category: "Zuivel"},
+    {name: "Zure room", amount: 125, unit: "g", category: "Zuivel"},
+    {name: "Verse guacamole", amount: 150, unit: "g", category: "Groenten"},
+    {name: "Tacokruiden", amount: 1, unit: "zakje", category: "Overig"},
+    {name: "Koriander", amount: 15, unit: "g", category: "Groenten"},
+    {name: "Olijfolie", amount: 2, unit: "el", category: "Overig"},
+    {name: "Zwarte peper", amount: 0, unit: "", category: "Overig"},
+    {name: "Zout", amount: 0, unit: "", category: "Overig"}
+  ],
+  "Vissticks met spinazie à la crème en krieltjes": [
+    {name: "Vissticks", amount: 20, unit: "stuks", category: "Vlees/Vis"},
+    {name: "Spinazie à la crème", amount: 750, unit: "g", category: "Groenten"},
+    {name: "Mini krieltjes", amount: 900, unit: "g", category: "Groenten"},
+    {name: "Appelmoes", amount: 0, unit: "naar smaak", category: "Groenten"},
+    {name: "Olijfolie", amount: 4, unit: "el", category: "Overig"},
+    {name: "Zout", amount: 0, unit: "naar smaak", category: "Overig"},
+    {name: "Zwarte peper", amount: 0, unit: "naar smaak", category: "Overig"}
+  ],
+  "Ovenschotel met gehakt broccoli": [
+    {name: "Broccoli", amount: 1, unit: "stuk", category: "Groenten"},
+    {name: "Aardappelen", amount: 800, unit: "g", category: "Groenten"},
+    {name: "Spek", amount: 150, unit: "g", category: "Vlees/Vis"},
+    {name: "Gehakt", amount: 500, unit: "g", category: "Vlees/Vis"},
+    {name: "Ui", amount: 1, unit: "stuk", category: "Groenten"},
+    {name: "Knoflook", amount: 2, unit: "teentjes", category: "Groenten"},
+    {name: "Gehaktkruiden", amount: 1, unit: "zakje", category: "Overig"},
+    {name: "Zout", amount: 0, unit: "", category: "Overig"},
+    {name: "Peper", amount: 0, unit: "", category: "Overig"},
+    {name: "Roomboter", amount: 25, unit: "g", category: "Zuivel"},
+    {name: "Crème fraîche", amount: 200, unit: "ml", category: "Zuivel"},
+    {name: "Olijfolie", amount: 2, unit: "el", category: "Overig"}
+  ],
+  "Kikkererwtencurry met couscous": [
+    {name: "Kikkererwten", amount: 400, unit: "g", category: "Groenten"},
+    {name: "Ui", amount: 1, unit: "stuk", category: "Groenten"},
+    {name: "Knoflook", amount: 1.5, unit: "teentjes", category: "Groenten"},
+    {name: "Kerriepoeder", amount: 1, unit: "el", category: "Overig"},
+    {name: "Kokosmelk", amount: 200, unit: "ml", category: "Zuivel"},
+    {name: "Tomatenblokjes", amount: 1, unit: "blikje", category: "Groenten"},
+    {name: "Couscous", amount: 300, unit: "g", category: "Rijst/Couscous"},
+    {name: "Water", amount: 0, unit: "volgens verpakking", category: "Overig"},
+    {name: "Olijfolie", amount: 2, unit: "el", category: "Overig"},
+    {name: "Zout / Peper", amount: 0, unit: "naar smaak", category: "Overig"}
+  ],
+  "Hutspot met speklapjes": [
+    {name: "Aardappel", amount: 1000, unit: "g", category: "Groenten"},
+    {name: "Hutspotgroenten", amount: 500, unit: "g", category: "Groenten"},
+    {name: "Ui", amount: 2, unit: "stuks", category: "Groenten"},
+    {name: "Olijfolie", amount: 2, unit: "el", category: "Overig"},
+    {name: "Speklapjes", amount: 2, unit: "stuks", category: "Vlees/Vis"}
+  ],
+  "Pasta pesto": [
+    {name: "Pasta", amount: 300, unit: "g", category: "Rijst/Couscous"},
+    {name: "Kipfilet", amount: 400, unit: "g", category: "Vlees/Vis"},
+    {name: "Ui", amount: 1, unit: "stuk", category: "Groenten"},
+    {name: "Kookroom", amount: 250, unit: "ml", category: "Zuivel"},
+    {name: "Cherry tomaatjes", amount: 250, unit: "g", category: "Groenten"},
+    {name: "Peper", amount: 0, unit: "", category: "Overig"},
+    {name: "Zout", amount: 0, unit: "", category: "Overig"},
+    {name: "Olijfolie", amount: 0, unit: "scheutje", category: "Overig"},
+    {name: "Pijnboompitten", amount: 60, unit: "g", category: "Overig"},
+    {name: "Rucola", amount: 0, unit: "handje", category: "Groenten"},
+    {name: "Pesto", amount: 4, unit: "el", category: "Overig"}
+  ],
+  "Prei schotel": [
+    {name: "Prei", amount: 500, unit: "g", category: "Groenten"},
+    {name: "Rode paprika", amount: 1, unit: "stuk", category: "Groenten"},
+    {name: "Aardappelschijfjes", amount: 600, unit: "g", category: "Groenten"},
+    {name: "Mager gehakt", amount: 300, unit: "g", category: "Vlees/Vis"},
+    {name: "Ei", amount: 1, unit: "stuk", category: "Overig"},
+    {name: "Kookroom (light)", amount: 125, unit: "ml", category: "Zuivel"},
+    {name: "Groente in totaal", amount: 650, unit: "g", category: "Groenten"},
+    {name: "Maggi Prei-Kerrie mix", amount: 1, unit: "pakje", category: "Overig"}
+  ],
+  "Kip Siam": [
+    {name: "Kipfilet", amount: 250, unit: "g", category: "Vlees/Vis"},
+    {name: "Wokgroente", amount: 700, unit: "g", category: "Groenten"},
+    {name: "Olie", amount: 1, unit: "el", category: "Overig"},
+    {name: "Kip Siam doosje Honig", amount: 1, unit: "stuk", category: "Overig"}
+  ]
+};
 
-        <!-- Footer Section -->
-        <footer class="bg-gray-200 p-4 text-center text-sm text-gray-500 rounded-b-xl">
-            Created with a single HTML file and Tailwind CSS.
-        </footer>
-    </div>
-    
-    <!-- Custom Modal/Message Box (Replaces alert()) -->
-    <div id="messageBox" class="fixed inset-0 bg-gray-900 bg-opacity-75 hidden items-center justify-center p-4 z-50">
-        <div class="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full transition duration-300 transform scale-100">
-            <h3 class="text-xl font-bold text-primary mb-3">Action Complete!</h3>
-            <p id="messageText" class="text-gray-700 mb-5">
-                The button was clicked. Remember: we use custom message boxes instead of `alert()`.
-            </p>
-            <button 
-                class="w-full px-4 py-2 bg-primary text-white font-semibold rounded-md hover:bg-indigo-700 focus:outline-none"
-                onclick="document.getElementById('messageBox').classList.add('hidden');"
-            >
-                Close
-            </button>
-        </div>
-    </div>
+// Populate dropdowns
+const days = ["day1","day2","day3","day4","day5","day6","day7"];
+const recipeNames = Object.keys(recipes);
+days.forEach(day => {
+  const select = document.getElementById(day);
+  recipeNames.forEach(r => {
+    const option = document.createElement("option");
+    option.value = r;
+    option.text = r;
+    select.add(option);
+  });
+});
 
-    <!-- JavaScript for interactivity -->
-    <script>
-        /**
-         * Function to display the custom message box instead of alert().
-         */
-        function showMessage() {
-            const messageBox = document.getElementById('messageBox');
-            messageBox.classList.remove('hidden');
-            messageBox.classList.add('flex');
-        }
+document.getElementById("generate").addEventListener("click", () => {
+  const selected = days.map(d => document.getElementById(d).value);
+  const aggregated = {};
 
-        // Add a click listener to close the modal when clicking outside
-        document.getElementById('messageBox').addEventListener('click', function(event) {
-            if (event.target.id === 'messageBox') {
-                event.target.classList.add('hidden');
-            }
-        });
-    </script>
+  selected.forEach(r => {
+    recipes[r].forEach(item => {
+      const key = item.name + " (" + item.unit + ")";
+      if (!aggregated[item.category]) aggregated[item.category] = {};
+      if (!aggregated[item.category][key]) aggregated[item.category][key] = 0;
+      aggregated[item.category][key] += item.amount;
+    });
+  });
+
+  let html = "";
+  Object.keys(aggregated).forEach(category => {
+    html += `<div class="section"><strong>${category}</strong><ul>`;
+    Object.keys(aggregated[category]).forEach(i => {
+      html += `<li>${i.split(" (")[0]}: ${aggregated[category][i]} ${i.match(/\((.*)\)/)[1]}</li>`;
+    });
+    html += `</ul></div>`;
+  });
+
+  document.getElementById("list").innerHTML = html;
+});
+</script>
+
 </body>
 </html>
