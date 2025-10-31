@@ -208,6 +208,17 @@
     color: #2c3e50;
     text-decoration: line-through;
   }
+
+  /* 📄 Exportknop */
+  #export {
+    background-color: var(--color-secondary);
+    margin-top: 15px;
+  }
+
+  #export:hover {
+    background-color: #e04e3d;
+  }
+
 </style>
 </head>
 <body>
@@ -249,7 +260,7 @@
 <div class="shopping-list">
   <h2>Boodschappenlijst!</h2>
   <div id="list"></div>
-  
+  <button id="export">📄 Exporteer ongevinkte items</button>
   <img src="picture.jpg" alt="Decoratieve afbeelding" class="shopping-list-image">
 </div>
 
@@ -352,7 +363,7 @@ const recipes = {
   ]
 };
 
-// Days en datalists vullen
+// Dagen instellen
 const days = ["day1","day2","day3","day4","day5","day6","day7"];
 const recipeNames = Object.keys(recipes);
 
@@ -366,26 +377,23 @@ days.forEach(day => {
   document.getElementById(day).value = "";
 });
 
-// ⬇️ Hulp: Ophalen & opslaan van vinkstatus
+// localStorage helpers
 function loadCheckedItems() {
   return JSON.parse(localStorage.getItem("checkedItems") || "{}");
 }
-
 function saveCheckedItems(obj) {
   localStorage.setItem("checkedItems", JSON.stringify(obj));
 }
 
-// ⬇️ Boodschappenlijst genereren
+// Generate shopping list
 document.getElementById("generate").addEventListener("click", () => {
   const checkedItems = loadCheckedItems();
-
   const selected = days.map(d => {
     const val = document.getElementById(d).value.trim();
     return val === "" ? "Geen" : val;
   });
 
   const aggregated = {};
-
   selected.forEach(r => {
     if(r === "Geen") return;
     recipes[r].forEach(item => {
@@ -418,7 +426,7 @@ document.getElementById("generate").addEventListener("click", () => {
 
   document.getElementById("list").innerHTML = html;
 
-  // Klikbare afvinkactie
+  // checkbox events
   document.querySelectorAll(".item-checkbox").forEach(box => {
     box.addEventListener("change", e => {
       const text = e.target.nextElementSibling;
@@ -432,13 +440,43 @@ document.getElementById("generate").addEventListener("click", () => {
         text.classList.remove("checked");
         delete saved[id];
       }
-
       saveCheckedItems(saved);
     });
   });
 });
 
-// ⬇️ Automatisch lijst tonen bij laden (met eerdere data)
+// 📄 Exportfunctie
+document.getElementById("export").addEventListener("click", () => {
+  const items = document.querySelectorAll(".item-checkbox");
+  let output = "Boodschappenlijst (niet-afgevinkte items)\n\n";
+
+  let currentCategory = "";
+  document.querySelectorAll(".section").forEach(section => {
+    const cat = section.querySelector("strong").innerText;
+    const listItems = section.querySelectorAll("li");
+    let catLines = [];
+
+    listItems.forEach(li => {
+      const checkbox = li.querySelector(".item-checkbox");
+      const text = li.querySelector(".item-text").innerText;
+      if (!checkbox.checked) catLines.push(" - " + text);
+    });
+
+    if (catLines.length > 0) {
+      output += cat + ":\n" + catLines.join("\n") + "\n\n";
+    }
+  });
+
+  const blob = new Blob([output], {type: "text/plain"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "boodschappenlijst.txt";
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+// Automatisch lijst tonen bij laden
 window.addEventListener("load", () => {
   document.getElementById("generate").click();
 });
