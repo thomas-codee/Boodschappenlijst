@@ -5,25 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>De Recepten Raket!</title>
 
-<!-- ✅ Voeg dit toe -->
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="apple-touch-icon" href="logo.png">
 <meta name="theme-color" content="#5cb377">
-<!-- ✅ Einde toevoeging -->
+
 <style>
-  /* 🚀 Quirky Kleurenpalet & Lettertype (Geïnspireerd door de afbeelding) */
   @import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Kalam:wght@300;400;700&display=swap');
   
   :root {
-    --color-primary: #5cb377; /* Groen (Hoofdaccent) */
-    --color-secondary: #ff6347; /* Tomatenrood (Extra accent) */
-    --color-background: #fdf6e3; /* Zeer lichtgeel/gebroken wit */
-    --color-text: #2c3e50; /* Donkerblauw (Tekst) */
-    --font-heading: 'Cabin Sketch', cursive; /* Speels lettertype voor titels */
-    --font-body: 'Kalam', cursive; /* Handgeschreven/Quirky voor body */
+    --color-primary: #5cb377;
+    --color-secondary: #ff6347;
+    --color-background: #fdf6e3;
+    --color-text: #2c3e50;
+    --font-heading: 'Cabin Sketch', cursive;
+    --font-body: 'Kalam', cursive;
   }
 
-  /* Algemene Styling */
   body {
     font-family: var(--font-body);
     display: flex;
@@ -34,7 +31,6 @@
     min-height: 100vh;
   }
 
-  /* Responsive lay-out voor grotere schermen */
   @media (min-width: 768px) {
     body {
       flex-direction: row; 
@@ -46,13 +42,12 @@
     color: var(--color-secondary); 
     margin-top: 0;
     margin-bottom: 25px;
-    font-size: 2.5em; /* Iets groter */
-    text-shadow: 2px 2px 0px rgba(0,0,0,0.1); /* Speelse schaduw */
-    border-bottom: 3px dashed var(--color-primary); /* Stippellijn als scheiding */
+    font-size: 2.5em;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+    border-bottom: 3px dashed var(--color-primary);
     padding-bottom: 10px;
   }
 
-  /* Controls sectie (Links) */
   .controls {
     flex: 1;
     max-width: 100%;
@@ -60,14 +55,14 @@
     margin-bottom: 40px; 
     background: #ffffff; 
     padding: 30px;
-    border-radius: 20px; /* Meer uitgesproken hoeken */
-    box-shadow: 8px 8px 0px var(--color-primary); /* Uitgesproken, "platte" schaduw */
+    border-radius: 20px;
+    box-shadow: 8px 8px 0px var(--color-primary);
     border: 3px solid var(--color-text);
   }
 
   @media (min-width: 768px) {
     .controls {
-      max-width: 400px; /* Iets breder */
+      max-width: 400px;
       margin-right: 40px;
       margin-bottom: 0;
     }
@@ -89,9 +84,9 @@
     margin-bottom: 15px;
     font-size: 1.1em;
     border: 3px solid var(--color-text);
-    border-radius: 10px; 
+    border-radius: 10px;
     box-sizing: border-box;
-    background-color: #fffaf0; /* Iets meer contrast in velden */
+    background-color: #fffaf0;
   }
   
   input[type="text"]:focus {
@@ -108,25 +103,23 @@
     font-weight: bold;
     letter-spacing: 1px;
     margin-top: 30px;
-    box-shadow: 4px 4px 0px var(--color-text); /* Dikke schaduw */
+    box-shadow: 4px 4px 0px var(--color-text);
     transition: all 0.1s ease;
   }
 
   button:hover {
     background-color: #4ca067; 
-    /* Druk op effect */
     transform: translate(2px, 2px);
     box-shadow: 2px 2px 0px var(--color-text);
   }
 
-  /* Boodschappenlijst sectie (Rechts) */
   .shopping-list {
     flex: 2;
     min-width: 250px;
     background: #ffffff; 
     padding: 30px;
     border-radius: 20px; 
-    box-shadow: -8px 8px 0px var(--color-secondary); /* Schaduw in tegenovergestelde richting */
+    box-shadow: -8px 8px 0px var(--color-secondary);
     border: 3px solid var(--color-text);
     position: relative; 
     overflow: hidden; 
@@ -160,39 +153,60 @@
     margin-left: 10px;
     position: relative;
   }
-  
-  /* Speelse lijst items */
+
   .shopping-list li::before {
-    content: '★'; /* Sterretje of een ander leuk teken */
+    content: '★';
     color: var(--color-secondary);
     font-size: 1em;
     position: absolute;
     left: -20px;
   }
 
-  /* 🖼️ Styling voor de Afbeelding (Groot en Uniek) */
   .shopping-list-image {
     position: absolute; 
-    bottom: -15px; /* Over de rand laten gaan */
-    left: 50%; /* Centraal onderin */
-    transform: translateX(-50%) rotate(-3deg); /* Scheve positie */
-    width: 250px; /* Grotere afbeelding */
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    width: 250px;
     height: auto; 
-    opacity: 0.9; 
-    z-index: 1; 
+    opacity: 0.9;
+    z-index: 1;
     pointer-events: none; 
-    
-    /* Polaroid-effect */
     background: white;
-    padding: 10px 10px 40px 10px; /* Extra ruimte onder voor "beschrijving" */
+    padding: 10px 10px 40px 10px;
     border: 1px solid #ccc;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
   }
 
-  /* Zorg dat de tekst boven de afbeelding staat */
   .shopping-list #list, .shopping-list h2 {
     position: relative;
     z-index: 2; 
+  }
+
+  /* ✅ Checkbox styling */
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+
+  .item-checkbox {
+    transform: scale(1.3);
+    accent-color: var(--color-primary);
+    cursor: pointer;
+  }
+
+  .item-text {
+    transition: background-color 0.3s, color 0.3s;
+    padding: 3px 6px;
+    border-radius: 8px;
+  }
+
+  .item-text.checked {
+    background-color: #b4e0b4;
+    color: #2c3e50;
+    text-decoration: line-through;
   }
 </style>
 </head>
@@ -338,36 +352,31 @@ const recipes = {
   ]
 };
 
-// Populate dropdowns with "Geen" default
+// Dagen en recepten vullen
 const days = ["day1","day2","day3","day4","day5","day6","day7"];
 const recipeNames = Object.keys(recipes);
 
-// Populate datalists for mobile-friendly searchable dropdowns
 days.forEach(day => {
   const dataList = document.getElementById(day + "List");
-
-  // Voeg recepten toe aan datalist
   recipeNames.forEach(r => {
     const option = document.createElement("option");
     option.value = r;
     dataList.appendChild(option);
   });
-
-  // Laat input leeg (geen visuele "Geen")
   document.getElementById(day).value = "";
 });
 
-// Generate shopping list
+// Boodschappenlijst genereren
 document.getElementById("generate").addEventListener("click", () => {
   const selected = days.map(d => {
     const val = document.getElementById(d).value.trim();
-    return val === "" ? "Geen" : val; // Als leeg, default naar "Geen"
+    return val === "" ? "Geen" : val;
   });
 
   const aggregated = {};
 
   selected.forEach(r => {
-    if(r === "Geen") return; // skip "Geen"
+    if(r === "Geen") return;
     recipes[r].forEach(item => {
       const key = item.name + " (" + item.unit + ")";
       if (!aggregated[item.category]) aggregated[item.category] = {};
@@ -378,17 +387,35 @@ document.getElementById("generate").addEventListener("click", () => {
 
   let html = "";
   Object.keys(aggregated).forEach(category => {
-    // FIX: De JavaScript-syntax voor template literals (backticks `) is correct in de JS-code
-    html += `<div class="section"><strong>${category}</strong><ul>`; 
+    html += `<div class="section"><strong>${category}</strong><ul>`;
     Object.keys(aggregated[category]).forEach(i => {
       const unitMatch = i.match(/\((.*)\)/);
       const unit = unitMatch ? unitMatch[1] : ''; 
-      html += `<li>${i.split(" (")[0]}: ${aggregated[category][i]} ${unit}</li>`;
+      const itemName = i.split(" (")[0];
+      html += `
+        <li>
+          <label class="check-item">
+            <input type="checkbox" class="item-checkbox">
+            <span class="item-text">${itemName}: ${aggregated[category][i]} ${unit}</span>
+          </label>
+        </li>`;
     });
     html += `</ul></div>`;
   });
 
   document.getElementById("list").innerHTML = html;
+
+  // Klikbare afvinkactie
+  document.querySelectorAll(".item-checkbox").forEach(box => {
+    box.addEventListener("change", e => {
+      const text = e.target.nextElementSibling;
+      if (e.target.checked) {
+        text.classList.add("checked");
+      } else {
+        text.classList.remove("checked");
+      }
+    });
+  });
 });
 </script>
 
