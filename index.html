@@ -85,16 +85,9 @@ h2 img.logo-header {
     position: relative;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    max-height: 80vh; /* scrollbaar op mobile */
+    padding-bottom: 150px; /* extra ruimte onderaan voor export-knop en afbeelding */
 }
 
-.shopping-list-inner {
-    overflow-y: auto;
-    padding-bottom: 80px; /* ruimte voor afbeelding en export */
-}
-
-/* Labels, inputs, buttons */
 label {
     font-weight: 700;
     display: block;
@@ -140,7 +133,6 @@ button:hover {
     box-shadow: 2px 2px 0px var(--color-text);
 }
 
-/* Shopping list items */
 .shopping-list .section {
     margin-bottom: 20px;
     padding-bottom: 8px;
@@ -258,10 +250,11 @@ button:hover {
 
 <div class="shopping-list">
   <h2>Boodschappenlijst! <img src="logo2.png" alt="Logo" class="logo-header"></h2>
-  <div class="shopping-list-inner" id="list"></div>
+  <div id="list"></div>
   <button id="export">📄 Exporteer boodschappenlijst</button>
   <img src="picture.jpg" alt="Decoratieve afbeelding" class="shopping-list-image">
 </div>
+
 <script>
 // (Je JavaScript code blijft exact hetzelfde, maar met een kleine fix voor de template literals)
 
