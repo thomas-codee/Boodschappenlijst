@@ -32,9 +32,7 @@
   }
 
   @media (min-width: 768px) {
-    body {
-      flex-direction: row; 
-    }
+    body { flex-direction: row; }
   }
 
   h2 {
@@ -88,7 +86,7 @@
     box-sizing: border-box;
     background-color: #fffaf0;
   }
-  
+
   input[type="text"]:focus {
     border-color: var(--color-secondary); 
     box-shadow: 3px 3px 0px var(--color-secondary);
@@ -229,35 +227,13 @@
 
 <div class="controls">
   <h2>Selecteer Je Maaltijden!</h2>
-
-  <label for="day1">Maandag</label>
-  <input type="text" list="day1List" id="day1" placeholder="Kies een recept...">
-  <datalist id="day1List"></datalist>
-
-  <label for="day2">Dinsdag</label>
-  <input type="text" list="day2List" id="day2" placeholder="Kies een recept...">
-  <datalist id="day2List"></datalist>
-
-  <label for="day3">Woensdag</label>
-  <input type="text" list="day3List" id="day3" placeholder="Kies een recept...">
-  <datalist id="day3List"></datalist>
-
-  <label for="day4">Donderdag</label>
-  <input type="text" list="day4List" id="day4" placeholder="Kies een recept...">
-  <datalist id="day4List"></datalist>
-
-  <label for="day5">Vrijdag</label>
-  <input type="text" list="day5List" id="day5" placeholder="Kies een recept...">
-  <datalist id="day5List"></datalist>
-
-  <label for="day6">Zaterdag</label>
-  <input type="text" list="day6List" id="day6" placeholder="Kies een recept...">
-  <datalist id="day6List"></datalist>
-
-  <label for="day7">Zondag</label>
-  <input type="text" list="day7List" id="day7" placeholder="Kies een recept...">
-  <datalist id="day7List"></datalist>
-
+  <label for="day1">Maandag</label><input type="text" list="day1List" id="day1"><datalist id="day1List"></datalist>
+  <label for="day2">Dinsdag</label><input type="text" list="day2List" id="day2"><datalist id="day2List"></datalist>
+  <label for="day3">Woensdag</label><input type="text" list="day3List" id="day3"><datalist id="day3List"></datalist>
+  <label for="day4">Donderdag</label><input type="text" list="day4List" id="day4"><datalist id="day4List"></datalist>
+  <label for="day5">Vrijdag</label><input type="text" list="day5List" id="day5"><datalist id="day5List"></datalist>
+  <label for="day6">Zaterdag</label><input type="text" list="day6List" id="day6"><datalist id="day6List"></datalist>
+  <label for="day7">Zondag</label><input type="text" list="day7List" id="day7"><datalist id="day7List"></datalist>
   <button id="generate">GO! Maak de Boodschappenlijst!</button>
 </div>
 
@@ -367,10 +343,9 @@ const recipes = {
   ]
 };
 
-// Vul datalists met recepten
+// Datalists vullen
 const days = ["day1","day2","day3","day4","day5","day6","day7"];
 const recipeNames = Object.keys(recipes);
-
 days.forEach(day => {
   const dataList = document.getElementById(day + "List");
   recipeNames.forEach(r => {
@@ -378,19 +353,14 @@ days.forEach(day => {
     option.value = r;
     dataList.appendChild(option);
   });
-  document.getElementById(day).value = "";
 });
 
-// Maak boodschappenlijst (afvinkstatus NIET opslaan)
+// Boodschappenlijst genereren
 document.getElementById("generate").addEventListener("click", () => {
-  const selected = days.map(d => {
-    const val = document.getElementById(d).value.trim();
-    return val === "" ? "Geen" : val;
-  });
-
+  const selected = days.map(d => document.getElementById(d).value.trim() || "Geen");
   const aggregated = {};
   selected.forEach(r => {
-    if(r === "Geen") return;
+    if (r === "Geen") return;
     recipes[r].forEach(item => {
       const key = item.name + " (" + item.unit + ")";
       if (!aggregated[item.category]) aggregated[item.category] = {};
@@ -400,68 +370,50 @@ document.getElementById("generate").addEventListener("click", () => {
   });
 
   let html = "";
-  Object.keys(aggregated).forEach(category => {
-    html += `<div class="section"><strong>${category}</strong><ul>`;
-    Object.keys(aggregated[category]).forEach(i => {
-      const unitMatch = i.match(/\((.*)\)/);
-      const unit = unitMatch ? unitMatch[1] : ''; 
+  Object.keys(aggregated).forEach(cat => {
+    html += `<div class="section"><strong>${cat}</strong><ul>`;
+    Object.keys(aggregated[cat]).forEach(i => {
       const itemName = i.split(" (")[0];
       const itemId = itemName.toLowerCase().replace(/\s+/g, "_");
-      html += `
-        <li>
-          <label class="check-item">
-            <input type="checkbox" class="item-checkbox" data-id="${itemId}">
-            <span class="item-text">${itemName}: ${aggregated[category][i]} ${unit}</span>
-          </label>
-        </li>`;
+      const checked = sessionStorage.getItem(itemId) === "true" ? "checked" : "";
+      const checkedClass = checked ? "checked" : "";
+      html += `<li><label class="check-item"><input type="checkbox" class="item-checkbox" data-id="${itemId}" ${checked}><span class="item-text ${checkedClass}">${itemName}: ${aggregated[cat][i]} ${i.match(/\((.*)\)/)[1]}</span></label></li>`;
     });
-    html += `</ul></div>`;
+    html += "</ul></div>";
   });
 
   document.getElementById("list").innerHTML = html;
-
-  // Maak exportknop zichtbaar
   document.getElementById("export").style.display = "inline-block";
 
-  // Checkbox toggles
   document.querySelectorAll(".item-checkbox").forEach(box => {
     box.addEventListener("change", e => {
       const text = e.target.nextElementSibling;
-      if (e.target.checked) text.classList.add("checked");
-      else text.classList.remove("checked");
+      const id = e.target.dataset.id;
+      if (e.target.checked) {
+        text.classList.add("checked");
+        sessionStorage.setItem(id, "true");
+      } else {
+        text.classList.remove("checked");
+        sessionStorage.setItem(id, "false");
+      }
     });
   });
 });
 
-// 📄 Exportfunctie
+// Export .txt
 document.getElementById("export").addEventListener("click", () => {
   let output = "Boodschappenlijst (niet-afgevinkte items)\n\n";
-
-  document.querySelectorAll(".section").forEach(section => {
-    const cat = section.querySelector("strong").innerText;
-    const listItems = section.querySelectorAll("li");
-    let catLines = [];
-
-    listItems.forEach(li => {
-      const checkbox = li.querySelector(".item-checkbox");
-      const text = li.querySelector(".item-text").innerText;
-      if (!checkbox.checked) catLines.push(" - " + text);
-    });
-
-    if (catLines.length > 0) {
-      output += cat + ":\n" + catLines.join("\n") + "\n\n";
-    }
+  document.querySelectorAll(".section").forEach(sec => {
+    const cat = sec.querySelector("strong").innerText;
+    const lines = [...sec.querySelectorAll("li")].filter(li => !li.querySelector(".item-checkbox").checked).map(li => " - " + li.querySelector(".item-text").innerText);
+    if (lines.length > 0) output += `${cat}:\n${lines.join("\n")}\n\n`;
   });
-
-  const blob = new Blob([output], {type: "text/plain"});
+  const blob = new Blob([output], {type:"text/plain"});
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
-  a.href = url;
-  a.download = "boodschappenlijst.txt";
-  a.click();
+  a.href = url; a.download = "boodschappenlijst.txt"; a.click();
   URL.revokeObjectURL(url);
 });
 </script>
-
 </body>
 </html>
