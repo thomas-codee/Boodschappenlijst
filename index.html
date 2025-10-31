@@ -352,7 +352,7 @@ const recipes = {
   ]
 };
 
-// Dagen en recepten vullen
+// Days en datalists vullen
 const days = ["day1","day2","day3","day4","day5","day6","day7"];
 const recipeNames = Object.keys(recipes);
 
@@ -366,8 +366,19 @@ days.forEach(day => {
   document.getElementById(day).value = "";
 });
 
-// Boodschappenlijst genereren
+// ⬇️ Hulp: Ophalen & opslaan van vinkstatus
+function loadCheckedItems() {
+  return JSON.parse(localStorage.getItem("checkedItems") || "{}");
+}
+
+function saveCheckedItems(obj) {
+  localStorage.setItem("checkedItems", JSON.stringify(obj));
+}
+
+// ⬇️ Boodschappenlijst genereren
 document.getElementById("generate").addEventListener("click", () => {
+  const checkedItems = loadCheckedItems();
+
   const selected = days.map(d => {
     const val = document.getElementById(d).value.trim();
     return val === "" ? "Geen" : val;
@@ -392,11 +403,13 @@ document.getElementById("generate").addEventListener("click", () => {
       const unitMatch = i.match(/\((.*)\)/);
       const unit = unitMatch ? unitMatch[1] : ''; 
       const itemName = i.split(" (")[0];
+      const itemId = itemName.toLowerCase().replace(/\s+/g, "_");
+      const isChecked = checkedItems[itemId];
       html += `
         <li>
           <label class="check-item">
-            <input type="checkbox" class="item-checkbox">
-            <span class="item-text">${itemName}: ${aggregated[category][i]} ${unit}</span>
+            <input type="checkbox" class="item-checkbox" data-id="${itemId}" ${isChecked ? "checked" : ""}>
+            <span class="item-text ${isChecked ? "checked" : ""}">${itemName}: ${aggregated[category][i]} ${unit}</span>
           </label>
         </li>`;
     });
@@ -409,13 +422,25 @@ document.getElementById("generate").addEventListener("click", () => {
   document.querySelectorAll(".item-checkbox").forEach(box => {
     box.addEventListener("change", e => {
       const text = e.target.nextElementSibling;
+      const id = e.target.getAttribute("data-id");
+      const saved = loadCheckedItems();
+
       if (e.target.checked) {
         text.classList.add("checked");
+        saved[id] = true;
       } else {
         text.classList.remove("checked");
+        delete saved[id];
       }
+
+      saveCheckedItems(saved);
     });
   });
+});
+
+// ⬇️ Automatisch lijst tonen bij laden (met eerdere data)
+window.addEventListener("load", () => {
+  document.getElementById("generate").click();
 });
 </script>
 
