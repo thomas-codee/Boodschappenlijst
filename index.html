@@ -183,7 +183,6 @@
     z-index: 2; 
   }
 
-  /* ✅ Checkbox styling */
   .check-item {
     display: flex;
     align-items: center;
@@ -209,16 +208,21 @@
     text-decoration: line-through;
   }
 
-  /* 📄 Exportknop */
   #export {
     background-color: var(--color-secondary);
-    margin-top: 15px;
+    margin-top: 10px;
+    width: auto;
+    padding: 10px 20px;
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+    z-index: 3;
+    display: none; /* Verborgen tot lijst gegenereerd is */
   }
 
   #export:hover {
     background-color: #e04e3d;
   }
-
 </style>
 </head>
 <body>
@@ -260,7 +264,7 @@
 <div class="shopping-list">
   <h2>Boodschappenlijst!</h2>
   <div id="list"></div>
-  <button id="export">📄 Exporteer ongevinkte items</button>
+  <button id="export">📄 Exporteer boodschappenlijst</button>
   <img src="picture.jpg" alt="Decoratieve afbeelding" class="shopping-list-image">
 </div>
 
@@ -363,7 +367,7 @@ const recipes = {
   ]
 };
 
-// Dagen instellen
+// Vul datalists met recepten
 const days = ["day1","day2","day3","day4","day5","day6","day7"];
 const recipeNames = Object.keys(recipes);
 
@@ -377,17 +381,8 @@ days.forEach(day => {
   document.getElementById(day).value = "";
 });
 
-// localStorage helpers
-function loadCheckedItems() {
-  return JSON.parse(localStorage.getItem("checkedItems") || "{}");
-}
-function saveCheckedItems(obj) {
-  localStorage.setItem("checkedItems", JSON.stringify(obj));
-}
-
-// Generate shopping list
+// Maak boodschappenlijst (afvinkstatus NIET opslaan)
 document.getElementById("generate").addEventListener("click", () => {
-  const checkedItems = loadCheckedItems();
   const selected = days.map(d => {
     const val = document.getElementById(d).value.trim();
     return val === "" ? "Geen" : val;
@@ -412,12 +407,11 @@ document.getElementById("generate").addEventListener("click", () => {
       const unit = unitMatch ? unitMatch[1] : ''; 
       const itemName = i.split(" (")[0];
       const itemId = itemName.toLowerCase().replace(/\s+/g, "_");
-      const isChecked = checkedItems[itemId];
       html += `
         <li>
           <label class="check-item">
-            <input type="checkbox" class="item-checkbox" data-id="${itemId}" ${isChecked ? "checked" : ""}>
-            <span class="item-text ${isChecked ? "checked" : ""}">${itemName}: ${aggregated[category][i]} ${unit}</span>
+            <input type="checkbox" class="item-checkbox" data-id="${itemId}">
+            <span class="item-text">${itemName}: ${aggregated[category][i]} ${unit}</span>
           </label>
         </li>`;
     });
@@ -426,31 +420,23 @@ document.getElementById("generate").addEventListener("click", () => {
 
   document.getElementById("list").innerHTML = html;
 
-  // checkbox events
+  // Maak exportknop zichtbaar
+  document.getElementById("export").style.display = "inline-block";
+
+  // Checkbox toggles
   document.querySelectorAll(".item-checkbox").forEach(box => {
     box.addEventListener("change", e => {
       const text = e.target.nextElementSibling;
-      const id = e.target.getAttribute("data-id");
-      const saved = loadCheckedItems();
-
-      if (e.target.checked) {
-        text.classList.add("checked");
-        saved[id] = true;
-      } else {
-        text.classList.remove("checked");
-        delete saved[id];
-      }
-      saveCheckedItems(saved);
+      if (e.target.checked) text.classList.add("checked");
+      else text.classList.remove("checked");
     });
   });
 });
 
 // 📄 Exportfunctie
 document.getElementById("export").addEventListener("click", () => {
-  const items = document.querySelectorAll(".item-checkbox");
   let output = "Boodschappenlijst (niet-afgevinkte items)\n\n";
 
-  let currentCategory = "";
   document.querySelectorAll(".section").forEach(section => {
     const cat = section.querySelector("strong").innerText;
     const listItems = section.querySelectorAll("li");
@@ -474,11 +460,6 @@ document.getElementById("export").addEventListener("click", () => {
   a.download = "boodschappenlijst.txt";
   a.click();
   URL.revokeObjectURL(url);
-});
-
-// Automatisch lijst tonen bij laden
-window.addEventListener("load", () => {
-  document.getElementById("generate").click();
 });
 </script>
 
