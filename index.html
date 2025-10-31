@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>De Recepten Raket!</title>
 
 <link rel="icon" type="image/png" href="logo.png">
@@ -12,215 +12,206 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Kalam:wght@300;400;700&display=swap');
 
-:root {
-    --color-primary: #5cb377;
-    --color-secondary: #ff6347;
-    --color-background: #fdf6e3;
-    --color-text: #2c3e50;
-    --font-heading: 'Cabin Sketch', cursive;
-    --font-body: 'Kalam', cursive;
+:root{
+  --color-primary: #5cb377;
+  --color-secondary: #ff6347;
+  --color-background: #fdf6e3;
+  --color-text: #2c3e50;
+  --font-heading: 'Cabin Sketch', cursive;
+  --font-body: 'Kalam', cursive;
 }
 
-body {
-    font-family: var(--font-body);
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    background-color: var(--color-background);
-    color: var(--color-text);
-    min-height: 100vh;
-    gap: 20px;
+body{
+  font-family: var(--font-body);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  min-height: 100vh;
+  gap: 20px;
 }
 
-@media (min-width: 768px) {
-    body {
-        flex-direction: row;
-        align-items: flex-start;
-        gap: 40px;
-    }
+@media (min-width: 768px){
+  body{ flex-direction: row; align-items: flex-start; gap: 40px; }
 }
 
-h2 {
-    font-family: var(--font-heading);
-    color: var(--color-secondary);
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 2.2em;
-    text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
-    border-bottom: 3px dashed var(--color-primary);
-    padding-bottom: 10px;
-    position: relative;
+h2{
+  font-family: var(--font-heading);
+  color: var(--color-secondary);
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 2.2em;
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+  border-bottom: 3px dashed var(--color-primary);
+  padding-bottom: 10px;
+  position: relative;
 }
 
-h2 img.logo-header {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 40px;
-    height: 40px;
+h2 img.logo-header{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
 }
 
-.controls, .shopping-list {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 20px;
-    border: 3px solid var(--color-text);
+.controls, .shopping-list{
+  background: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  border: 3px solid var(--color-text);
 }
 
-.controls {
-    flex: 1;
-    max-width: 100%;
-    box-shadow: 6px 6px 0px var(--color-primary);
+.controls{
+  flex: 1;
+  max-width: 100%;
+  box-shadow: 6px 6px 0 var(--color-primary);
 }
 
-.shopping-list {
-    flex: 2;
-    min-width: 250px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    padding-bottom: 200px;
-    box-shadow: -8px 8px 0px var(--color-secondary);
+.shopping-list{
+  flex: 2;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-bottom: 200px; /* ruimte voor decoratieve afbeelding */
+  box-shadow: -8px 8px 0 var(--color-secondary);
 }
 
-label {
-    font-weight: 700;
-    display: block;
-    margin-top: 15px;
-    margin-bottom: 5px;
-    font-size: 1.05em;
+label{
+  font-weight: 700;
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-size: 1.05em;
 }
 
-input[type="text"], button {
-    font-family: var(--font-body);
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 12px;
-    font-size: 1em;
-    border: 3px solid var(--color-text);
-    border-radius: 10px;
-    box-sizing: border-box;
-    background-color: #fffaf0;
+input[type="text"], button{
+  font-family: var(--font-body);
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  font-size: 1em;
+  border: 3px solid var(--color-text);
+  border-radius: 10px;
+  box-sizing: border-box;
+  background-color: #fffaf0;
 }
 
-input[type="text"]:focus {
-    border-color: var(--color-secondary);
-    box-shadow: 3px 3px 0px var(--color-secondary);
-    outline: none;
+input[type="text"]:focus{
+  border-color: var(--color-secondary);
+  box-shadow: 3px 3px 0 var(--color-secondary);
+  outline: none;
 }
 
-button {
-    background-color: var(--color-primary);
-    color: white;
-    border: 3px solid var(--color-text);
-    cursor: pointer;
-    font-weight: bold;
-    letter-spacing: 1px;
-    margin-top: 10px;
-    box-shadow: 4px 4px 0px var(--color-text);
-    transition: all 0.1s ease;
+button{
+  background-color: var(--color-primary);
+  color: white;
+  border: 3px solid var(--color-text);
+  cursor: pointer;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-top: 10px;
+  box-shadow: 4px 4px 0 var(--color-text);
+  transition: all .1s ease;
 }
 
-button:hover {
-    background-color: #4ca067;
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px var(--color-text);
+button:hover{
+  background-color: #4ca067;
+  transform: translate(2px,2px);
+  box-shadow: 2px 2px 0 var(--color-text);
 }
 
-.shopping-list .section {
-    margin-bottom: 15px;
-    padding-bottom: 8px;
-    border-bottom: 2px dotted var(--color-primary);
+.shopping-list .section{
+  margin-bottom: 15px;
+  padding-bottom: 8px;
+  border-bottom: 2px dotted var(--color-primary);
 }
 
-.shopping-list .section:last-child {
-    border-bottom: none;
+.shopping-list .section:last-child{ border-bottom: none; }
+
+.shopping-list strong{
+  font-family: var(--font-heading);
+  font-size: 1.3em;
+  color: var(--color-primary);
 }
 
-.shopping-list strong {
-    font-family: var(--font-heading);
-    font-size: 1.3em;
-    color: var(--color-primary);
+.shopping-list ul{
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0 0;
 }
 
-.shopping-list ul {
-    list-style: none;
-    padding: 0;
-    margin: 8px 0 0 0;
+.shopping-list li{
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+  margin-left: 10px;
+  position: relative;
 }
 
-.shopping-list li {
-    padding: 5px 0;
-    border-bottom: 1px solid #eee;
-    margin-left: 10px;
-    position: relative;
+.shopping-list li::before{
+  content: '★';
+  color: var(--color-secondary);
+  font-size: 1em;
+  position: absolute;
+  left: -20px;
 }
 
-.shopping-list li::before {
-    content: '★';
-    color: var(--color-secondary);
-    font-size: 1em;
-    position: absolute;
-    left: -20px;
+/* kleiner decoratief plaatje */
+.shopping-list-image{
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
+  width: 120px;
+  height: auto;
+  opacity: 0.9;
+  z-index: 1;
+  pointer-events: none;
+  background: white;
+  padding: 10px 10px 30px 10px;
+  border: 1px solid #ccc;
+  box-shadow: 4px 4px 12px rgba(0,0,0,0.2);
 }
 
-.shopping-list-image {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%) rotate(-3deg);
-    width: 120px;
-    height: auto;
-    opacity: 0.9;
-    z-index: 1;
-    pointer-events: none;
-    background: white;
-    padding: 10px 10px 30px 10px;
-    border: 1px solid #ccc;
-    box-shadow: 4px 4px 12px rgba(0,0,0,0.2);
+.check-item{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
 }
 
-.check-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
+.item-checkbox{ transform: scale(1.3); accent-color: var(--color-primary); cursor: pointer; }
+
+.item-text{
+  transition: background-color .3s, color .3s;
+  padding: 3px 6px;
+  border-radius: 8px;
+}
+.item-text.checked{
+  background-color: #b4e0b4;
+  color: #2c3e50;
+  text-decoration: line-through;
 }
 
-.item-checkbox {
-    transform: scale(1.3);
-    accent-color: var(--color-primary);
-    cursor: pointer;
+/* EXPORT knop - kleiner en rechts uitlijnen */
+#export{
+  margin-top: 10px;
+  margin-left: auto;      /* dwingt de knop naar rechts */
+  display: none;          /* zichtbaar na generate */
+  font-size: 0.78rem;     /* kleiner lettertype */
+  padding: 6px 10px;      /* kleinere padding */
+  height: auto;
+  line-height: 1;
+  border-radius: 8px;
 }
 
-.item-text {
-    transition: background-color 0.3s, color 0.3s;
-    padding: 3px 6px;
-    border-radius: 8px;
-}
-
-.item-text.checked {
-    background-color: #b4e0b4;
-    color: #2c3e50;
-    text-decoration: line-through;
-}
-
-#export {
-    margin-top: 10px;
-    align-self: flex-end;
-    display: none;
-    font-size: 0.9em;
-    padding: 5px 12px;
-}
-
-@media (max-width: 767px) {
-    .shopping-list {
-        padding-bottom: 250px;
-        padding-top: 20px;
-    }
-    .shopping-list-image {
-        bottom: 20px;
-    }
+/* mobile adjustments */
+@media (max-width: 767px){
+  .shopping-list{ padding-bottom: 250px; padding-top: 12px; }
+  .shopping-list-image{ bottom: 20px; width: 100px; }
+  #export{ font-size: 0.75rem; padding: 5px 8px; }
 }
 </style>
 </head>
@@ -228,25 +219,33 @@ button:hover {
 
 <div class="controls">
   <h2>Selecteer Je Maaltijden!</h2>
+
   <label for="day1">Maandag</label>
   <input type="text" list="day1List" id="day1" placeholder="Kies een recept..."><datalist id="day1List"></datalist>
+
   <label for="day2">Dinsdag</label>
   <input type="text" list="day2List" id="day2" placeholder="Kies een recept..."><datalist id="day2List"></datalist>
+
   <label for="day3">Woensdag</label>
   <input type="text" list="day3List" id="day3" placeholder="Kies een recept..."><datalist id="day3List"></datalist>
+
   <label for="day4">Donderdag</label>
   <input type="text" list="day4List" id="day4" placeholder="Kies een recept..."><datalist id="day4List"></datalist>
+
   <label for="day5">Vrijdag</label>
   <input type="text" list="day5List" id="day5" placeholder="Kies een recept..."><datalist id="day5List"></datalist>
+
   <label for="day6">Zaterdag</label>
   <input type="text" list="day6List" id="day6" placeholder="Kies een recept..."><datalist id="day6List"></datalist>
+
   <label for="day7">Zondag</label>
   <input type="text" list="day7List" id="day7" placeholder="Kies een recept..."><datalist id="day7List"></datalist>
+
   <button id="generate">GO! Maak de Boodschappenlijst!</button>
 </div>
 
 <div class="shopping-list">
-  <h2>Boodschappenlijst! <img src="logo2.png" alt="Logo" class="logo-header"></h2>
+  <h2>Boodschappenlijst! <img src="logo.png" alt="Logo" class="logo-header"></h2>
   <div class="list-items-container" id="list"></div>
   <button id="export">📄 Exporteer</button>
   <img src="picture.jpg" alt="Decoratieve afbeelding" class="shopping-list-image">
