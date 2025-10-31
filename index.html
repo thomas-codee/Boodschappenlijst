@@ -85,9 +85,18 @@ h2 img.logo-header {
     position: relative;
     display: flex;
     flex-direction: column;
-    padding-bottom: 150px; /* extra ruimte onderaan voor export-knop en afbeelding */
+    /* Extra padding zodat afbeelding altijd vrij staat */
+    padding-bottom: 200px;
 }
 
+.list-items-container {
+    /* Alle lijstitems in deze container */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* Inputs en buttons */
 label {
     font-weight: 700;
     display: block;
@@ -133,6 +142,7 @@ button:hover {
     box-shadow: 2px 2px 0px var(--color-text);
 }
 
+/* Shopping list items */
 .shopping-list .section {
     margin-bottom: 20px;
     padding-bottom: 8px;
@@ -250,7 +260,7 @@ button:hover {
 
 <div class="shopping-list">
   <h2>Boodschappenlijst! <img src="logo2.png" alt="Logo" class="logo-header"></h2>
-  <div id="list"></div>
+  <div class="list-items-container" id="list"></div>
   <button id="export">📄 Exporteer boodschappenlijst</button>
   <img src="picture.jpg" alt="Decoratieve afbeelding" class="shopping-list-image">
 </div>
