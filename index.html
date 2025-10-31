@@ -79,7 +79,7 @@ h2 img.logo-header {
     display: flex;
     flex-direction: column;
     position: relative;
-    padding-bottom: 200px; /* ruimte voor afbeelding */
+    padding-bottom: 200px;
     box-shadow: -8px 8px 0px var(--color-secondary);
 }
 
@@ -169,7 +169,7 @@ button:hover {
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%) rotate(-3deg);
-    width: 120px; /* kleiner gemaakt */
+    width: 120px;
     height: auto;
     opacity: 0.9;
     z-index: 1;
@@ -209,6 +209,8 @@ button:hover {
     margin-top: 10px;
     align-self: flex-end;
     display: none;
+    font-size: 0.9em;
+    padding: 5px 12px;
 }
 
 @media (max-width: 767px) {
@@ -244,9 +246,9 @@ button:hover {
 </div>
 
 <div class="shopping-list">
-  <h2>Boodschappenlijst! <img src="logo.png" alt="Logo" class="logo-header"></h2>
+  <h2>Boodschappenlijst! <img src="logo2.png" alt="Logo" class="logo-header"></h2>
   <div class="list-items-container" id="list"></div>
-  <button id="export">📄 Exporteer boodschappenlijst</button>
+  <button id="export">📄 Exporteer</button>
   <img src="picture.jpg" alt="Decoratieve afbeelding" class="shopping-list-image">
 </div>
 
@@ -360,14 +362,12 @@ days.forEach(day => {
     option.value = r;
     dataList.appendChild(option);
   });
-  document.getElementById(day).value = ""; // placeholder
+  document.getElementById(day).value = "";
 });
 
-// Vinkjes per sessie
-let checkedItems = {};
+let checkedItems = {}; // Session memory
 
-// Generate
-document.getElementById("generate").addEventListener("click", () => {
+function generateList() {
   const selected = days.map(d => {
     const val = document.getElementById(d).value.trim();
     return val === "" ? "Geen" : val;
@@ -391,9 +391,11 @@ document.getElementById("generate").addEventListener("click", () => {
       const unitMatch = i.match(/\((.*)\)/);
       const unit = unitMatch ? unitMatch[1] : ''; 
       const id = i.replace(/\s+/g, '_');
+      const checked = checkedItems[id] ? 'checked' : '';
+      const textClass = checkedItems[id] ? 'item-text checked' : 'item-text';
       html += `<li class="check-item">
-                 <input type="checkbox" class="item-checkbox" data-id="${id}">
-                 <span class="item-text" id="${id}">${i.split(" (")[0]}: ${aggregated[category][i]} ${unit}</span>
+                 <input type="checkbox" class="item-checkbox" data-id="${id}" ${checked}>
+                 <span class="${textClass}" id="${id}">${i.split(" (")[0]}: ${aggregated[category][i]} ${unit}</span>
                </li>`;
     });
     html += `</ul></div>`;
@@ -402,7 +404,6 @@ document.getElementById("generate").addEventListener("click", () => {
   document.getElementById("list").innerHTML = html;
   document.getElementById("export").style.display = "block";
 
-  // Checkbox events
   document.querySelectorAll('.item-checkbox').forEach(cb => {
     cb.addEventListener('change', e => {
       const id = cb.dataset.id;
@@ -416,9 +417,10 @@ document.getElementById("generate").addEventListener("click", () => {
       }
     });
   });
-});
+}
 
-// Export
+document.getElementById("generate").addEventListener("click", generateList);
+
 document.getElementById("export").addEventListener("click", () => {
   const items = Array.from(document.querySelectorAll('.item-text'))
                     .filter(i => !i.classList.contains('checked'))
