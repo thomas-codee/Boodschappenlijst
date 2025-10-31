@@ -21,30 +21,29 @@
     --font-body: 'Kalam', cursive;
   }
 
-  /* ------------------------------------------------
-   * MOBILE-FIRST STYLES (Default for all screen sizes)
-   * ------------------------------------------------ */
-
   body {
     font-family: var(--font-body);
     display: flex;
     flex-direction: column; 
-    padding: 15px; /* Minder padding voor mobiel */
+    padding: 30px;
     background-color: var(--color-background); 
     color: var(--color-text);
     min-height: 100vh;
-    box-sizing: border-box; /* Zorg ervoor dat padding de breedte niet beïnvloedt */
+  }
+
+  @media (min-width: 768px) {
+    body { flex-direction: row; }
   }
 
   h2 {
     font-family: var(--font-heading);
     color: var(--color-secondary); 
     margin-top: 0;
-    margin-bottom: 20px; /* Iets minder marge */
-    font-size: 2em; /* Iets kleiner voor mobiel */
+    margin-bottom: 25px;
+    font-size: 2.5em;
     text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
     border-bottom: 3px dashed var(--color-primary);
-    padding-bottom: 8px;
+    padding-bottom: 10px;
     position: relative;
   }
 
@@ -52,60 +51,54 @@
     position: absolute;
     top: 0;
     right: 0;
-    width: 40px; /* Kleiner logo op mobiel */
-    height: 40px;
-  }
-
-  .controls, .shopping-list {
-    flex: 1; /* Zorgt ervoor dat ze de flex containerruimte vullen */
-    width: 100%; /* Belangrijk voor volle breedte op mobiel */
-    margin: 0 0 30px 0; /* Standaard marge onderaan voor stapelen */
-    background: #ffffff; 
-    padding: 20px; /* Minder padding voor mobiel */
-    border-radius: 15px; /* Iets minder afgeronde hoeken */
-    border: 3px solid var(--color-text);
-    box-sizing: border-box;
+    width: 50px;
+    height: 50px;
   }
 
   .controls {
-    box-shadow: 6px 6px 0px var(--color-primary); /* Iets kleinere schaduw */
+    flex: 1;
+    max-width: 100%;
+    margin-right: 0;
+    margin-bottom: 40px; 
+    background: #ffffff; 
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 8px 8px 0px var(--color-primary);
+    border: 3px solid var(--color-text);
   }
-  
-  .shopping-list {
-    min-width: unset; /* Overschrijf de oorspronkelijke min-width */
-    box-shadow: -6px 6px 0px var(--color-secondary); /* Iets kleinere schaduw */
-    position: relative; 
-    overflow: hidden; 
-  }
-  
-  .shopping-list .section {
-    margin-bottom: 15px; /* Minder marge */
+
+  @media (min-width: 768px) {
+    .controls {
+      max-width: 400px;
+      margin-right: 40px;
+      margin-bottom: 0;
+    }
   }
 
   label {
     font-weight: 700; 
     display: block;
-    margin-top: 15px;
-    margin-bottom: 6px;
+    margin-top: 18px;
+    margin-bottom: 8px;
     color: var(--color-text);
-    font-size: 1em; /* Standaard lettergrootte */
+    font-size: 1.1em;
   }
 
   input[type="text"], button {
     font-family: var(--font-body);
     width: 100%;
     padding: 10px;
-    margin-bottom: 12px;
-    font-size: 1em;
-    border: 2px solid var(--color-text); /* Dunnere rand */
-    border-radius: 8px; /* Minder afgerond */
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    border: 3px solid var(--color-text);
+    border-radius: 10px;
     box-sizing: border-box;
     background-color: #fffaf0;
   }
 
   input[type="text"]:focus {
     border-color: var(--color-secondary); 
-    box-shadow: 2px 2px 0px var(--color-secondary); /* Kleinere focus schaduw */
+    box-shadow: 3px 3px 0px var(--color-secondary);
     outline: none;
   }
 
@@ -116,112 +109,126 @@
     cursor: pointer;
     font-weight: bold;
     letter-spacing: 1px;
-    margin-top: 20px; /* Iets minder marge */
-    box-shadow: 3px 3px 0px var(--color-text); /* Kleinere schaduw */
+    margin-top: 30px;
+    box-shadow: 4px 4px 0px var(--color-text);
     transition: all 0.1s ease;
   }
 
   button:hover {
     background-color: #4ca067; 
-    transform: none; /* Verwijder de translate voor mobiel */
-    box-shadow: 3px 3px 0px var(--color-text);
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--color-text);
   }
-  
+
+  .shopping-list {
+    flex: 2;
+    min-width: 250px;
+    background: #ffffff; 
+    padding: 30px;
+    border-radius: 20px; 
+    box-shadow: -8px 8px 0px var(--color-secondary);
+    border: 3px solid var(--color-text);
+    position: relative; 
+    overflow: hidden; 
+  }
+
+  .shopping-list .section {
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px dotted var(--color-primary); 
+  }
+
+  .shopping-list .section:last-child {
+    border-bottom: none;
+  }
+
   .shopping-list strong {
     font-family: var(--font-heading);
-    font-size: 1.4em; /* Iets kleiner */
+    font-size: 1.5em;
     color: var(--color-primary);
   }
 
+  .shopping-list ul {
+    list-style: none; 
+    padding: 0;
+    margin: 10px 0 0 0;
+  }
+
+  .shopping-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee; 
+    margin-left: 10px;
+    position: relative;
+  }
+
   .shopping-list li::before {
-    left: -18px; /* Pas positie van ster aan */
+    content: '★';
+    color: var(--color-secondary);
+    font-size: 1em;
+    position: absolute;
+    left: -20px;
   }
 
   .shopping-list-image {
     position: absolute; 
-    bottom: 0px; /* Zorg dat het beeld niet te ver uitsteekt */
+    bottom: -15px;
     left: 50%;
     transform: translateX(-50%) rotate(-3deg);
-    width: 180px; /* Kleinere afbeelding voor mobiel */
-    opacity: 0.7; /* Iets transparanter */
+    width: 250px;
+    height: auto; 
+    opacity: 0.9;
     z-index: 1;
+    pointer-events: none; 
     background: white;
-    padding: 5px 5px 20px 5px; /* Minder padding */
+    padding: 10px 10px 40px 10px;
     border: 1px solid #ccc;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
   }
-  
+
+  .shopping-list #list, .shopping-list h2 {
+    position: relative;
+    z-index: 2; 
+  }
+
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+
+  .item-checkbox {
+    transform: scale(1.3);
+    accent-color: var(--color-primary);
+    cursor: pointer;
+  }
+
+  .item-text {
+    transition: background-color 0.3s, color 0.3s;
+    padding: 3px 6px;
+    border-radius: 8px;
+  }
+
+  .item-text.checked {
+    background-color: #b4e0b4;
+    color: #2c3e50;
+    text-decoration: line-through;
+  }
+
   #export {
-    right: 20px; /* Pas positie aan */
-    bottom: 20px; /* Pas positie aan */
-    padding: 8px 15px; /* Kleinere knop */
-    font-size: 0.9em;
+    background-color: var(--color-secondary);
+    margin-top: 10px;
+    width: auto;
+    padding: 10px 20px;
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+    z-index: 3;
+    display: none;
   }
 
-  /* ------------------------------------------------
-   * DESKTOP OVERRIDES (vanaf 768px)
-   * ------------------------------------------------ */
-  @media (min-width: 768px) {
-    body { 
-      flex-direction: row; 
-      padding: 30px; 
-    }
-    
-    h2 {
-      margin-bottom: 25px;
-      font-size: 2.5em;
-      padding-bottom: 10px;
-    }
-    
-    h2 img.logo-header {
-      width: 50px;
-      height: 50px;
-    }
-
-    .controls {
-      max-width: 400px;
-      margin-right: 40px;
-      margin-bottom: 0;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 8px 8px 0px var(--color-primary);
-    }
-    
-    .shopping-list {
-      flex: 2;
-      min-width: 250px;
-      padding: 30px;
-      border-radius: 20px; 
-      box-shadow: -8px 8px 0px var(--color-secondary);
-    }
-    
-    .shopping-list-image {
-      bottom: -15px;
-      width: 250px;
-      opacity: 0.9;
-      padding: 10px 10px 40px 10px;
-      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    button:hover {
-      transform: translate(2px, 2px);
-      box-shadow: 2px 2px 0px var(--color-text);
-    }
-    
-    .shopping-list strong {
-      font-size: 1.5em;
-    }
-    
-    .shopping-list li::before {
-      left: -20px;
-    }
-    
-    #export {
-      right: 30px;
-      bottom: 30px;
-      padding: 10px 20px;
-      font-size: 1em;
-    }
+  #export:hover {
+    background-color: #e04e3d;
   }
 </style>
 </head>
@@ -247,12 +254,11 @@
 </div>
 
 <div class="shopping-list">
-  <h2>Boodschappenlijst! <img src="logo2.png" alt="Logo" class="logo-header"></h2>
+  <h2>Boodschappenlijst! <img src="logo.png" alt="Logo" class="logo-header"></h2>
   <div id="list"></div>
   <button id="export">📄 Exporteer boodschappenlijst</button>
   <img src="picture.jpg" alt="Decoratieve afbeelding" class="shopping-list-image">
 </div>
-
 <script>
 // (Je JavaScript code blijft exact hetzelfde, maar met een kleine fix voor de template literals)
 
@@ -385,7 +391,6 @@ document.getElementById("generate").addEventListener("click", () => {
       const itemId = itemName.toLowerCase().replace(/\s+/g, "_");
       const checked = sessionStorage.getItem(itemId) === "true" ? "checked" : "";
       const checkedClass = checked ? "checked" : "";
-      // Fix for template literal in JS, using backticks for the outer string
       html += `<li><label class="check-item"><input type="checkbox" class="item-checkbox" data-id="${itemId}" ${checked}><span class="item-text ${checkedClass}">${itemName}: ${aggregated[cat][i]} ${i.match(/\((.*)\)/)[1]}</span></label></li>`;
     });
     html += "</ul></div>";
