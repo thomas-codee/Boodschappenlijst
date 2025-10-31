@@ -44,7 +44,7 @@ h2 {
     font-family: var(--font-heading);
     color: var(--color-secondary);
     margin-top: 0;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     font-size: 2.2em;
     text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
     border-bottom: 3px dashed var(--color-primary);
@@ -65,41 +65,29 @@ h2 img.logo-header {
     padding: 20px;
     border-radius: 20px;
     border: 3px solid var(--color-text);
-    box-shadow: 6px 6px 0px var(--color-primary);
-}
-
-@media (min-width: 768px) {
-    .shopping-list {
-        box-shadow: -8px 8px 0px var(--color-secondary);
-    }
 }
 
 .controls {
     flex: 1;
     max-width: 100%;
+    box-shadow: 6px 6px 0px var(--color-primary);
 }
 
 .shopping-list {
     flex: 2;
     min-width: 250px;
+    display: flex;
+    flex-direction: column;
     position: relative;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 200px; /* ruimte onder afbeelding */
-}
-
-.list-items-container {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+    padding-bottom: 200px; /* ruimte voor afbeelding */
+    box-shadow: -8px 8px 0px var(--color-secondary);
 }
 
 label {
     font-weight: 700;
     display: block;
-    margin-top: 18px;
-    margin-bottom: 8px;
-    color: var(--color-text);
+    margin-top: 15px;
+    margin-bottom: 5px;
     font-size: 1.05em;
 }
 
@@ -140,7 +128,7 @@ button:hover {
 }
 
 .shopping-list .section {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     padding-bottom: 8px;
     border-bottom: 2px dotted var(--color-primary);
 }
@@ -158,11 +146,11 @@ button:hover {
 .shopping-list ul {
     list-style: none;
     padding: 0;
-    margin: 10px 0 0 0;
+    margin: 8px 0 0 0;
 }
 
 .shopping-list li {
-    padding: 6px 0;
+    padding: 5px 0;
     border-bottom: 1px solid #eee;
     margin-left: 10px;
     position: relative;
@@ -178,18 +166,18 @@ button:hover {
 
 .shopping-list-image {
     position: absolute;
-    bottom: 40px; /* hoger geplaatst zodat knop vrij blijft */
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%) rotate(-3deg);
-    width: 200px;
+    width: 120px; /* kleiner gemaakt */
     height: auto;
     opacity: 0.9;
     z-index: 1;
     pointer-events: none;
     background: white;
-    padding: 10px 10px 40px 10px;
+    padding: 10px 10px 30px 10px;
     border: 1px solid #ccc;
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+    box-shadow: 4px 4px 12px rgba(0,0,0,0.2);
 }
 
 .check-item {
@@ -218,31 +206,18 @@ button:hover {
 }
 
 #export {
-    background-color: var(--color-secondary);
-    width: auto;
-    padding: 10px 20px;
-    position: absolute;
-    right: 20px;
-    bottom: 100px; /* boven afbeelding */
-    z-index: 3;
+    margin-top: 10px;
+    align-self: flex-end;
     display: none;
 }
 
-#export:hover {
-    background-color: #e04e3d;
-}
-
-/* Mobile fix */
 @media (max-width: 767px) {
     .shopping-list {
         padding-bottom: 250px;
         padding-top: 20px;
     }
     .shopping-list-image {
-        bottom: 40px;
-    }
-    #export {
-        bottom: 100px;
+        bottom: 20px;
     }
 }
 </style>
@@ -269,7 +244,7 @@ button:hover {
 </div>
 
 <div class="shopping-list">
-  <h2>Boodschappenlijst! <img src="logo2.png" alt="Logo" class="logo-header"></h2>
+  <h2>Boodschappenlijst! <img src="logo.png" alt="Logo" class="logo-header"></h2>
   <div class="list-items-container" id="list"></div>
   <button id="export">📄 Exporteer boodschappenlijst</button>
   <img src="picture.jpg" alt="Decoratieve afbeelding" class="shopping-list-image">
@@ -376,6 +351,8 @@ const recipes = {
 
 const days = ["day1","day2","day3","day4","day5","day6","day7"];
 const recipeNames = Object.keys(recipes);
+
+// Populate datalists
 days.forEach(day => {
   const dataList = document.getElementById(day + "List");
   recipeNames.forEach(r => {
@@ -383,13 +360,22 @@ days.forEach(day => {
     option.value = r;
     dataList.appendChild(option);
   });
+  document.getElementById(day).value = ""; // placeholder
 });
 
+// Vinkjes per sessie
+let checkedItems = {};
+
+// Generate
 document.getElementById("generate").addEventListener("click", () => {
-  const selected = days.map(d => document.getElementById(d).value.trim() || "Geen");
+  const selected = days.map(d => {
+    const val = document.getElementById(d).value.trim();
+    return val === "" ? "Geen" : val;
+  });
+
   const aggregated = {};
   selected.forEach(r => {
-    if (r === "Geen") return;
+    if(r === "Geen") return;
     recipes[r].forEach(item => {
       const key = item.name + " (" + item.unit + ")";
       if (!aggregated[item.category]) aggregated[item.category] = {};
@@ -399,53 +385,53 @@ document.getElementById("generate").addEventListener("click", () => {
   });
 
   let html = "";
-  Object.keys(aggregated).forEach(cat => {
-    html += `<div class="section"><strong>${cat}</strong><ul>`;
-    Object.keys(aggregated[cat]).forEach(i => {
-      const itemName = i.split(" (")[0];
-      const itemId = itemName.toLowerCase().replace(/\s+/g, "_");
-      const checked = sessionStorage.getItem(itemId) === "true" ? "checked" : "";
-      const checkedClass = checked ? "checked" : "";
-      html += `<li><label class="check-item"><input type="checkbox" class="item-checkbox" data-id="${itemId}" ${checked}><span class="item-text ${checkedClass}">${itemName}: ${aggregated[cat][i]} ${i.match(/\((.*)\)/)[1]}</span></label></li>`;
+  Object.keys(aggregated).forEach(category => {
+    html += `<div class="section"><strong>${category}</strong><ul>`; 
+    Object.keys(aggregated[category]).forEach(i => {
+      const unitMatch = i.match(/\((.*)\)/);
+      const unit = unitMatch ? unitMatch[1] : ''; 
+      const id = i.replace(/\s+/g, '_');
+      html += `<li class="check-item">
+                 <input type="checkbox" class="item-checkbox" data-id="${id}">
+                 <span class="item-text" id="${id}">${i.split(" (")[0]}: ${aggregated[category][i]} ${unit}</span>
+               </li>`;
     });
-    html += "</ul></div>";
+    html += `</ul></div>`;
   });
 
   document.getElementById("list").innerHTML = html;
-  document.getElementById("export").style.display = "inline-block";
+  document.getElementById("export").style.display = "block";
 
-  document.querySelectorAll(".item-checkbox").forEach(box => {
-    box.addEventListener("change", e => {
-      const text = e.target.nextElementSibling;
-      const id = e.target.dataset.id;
-      if (e.target.checked) {
-        text.classList.add("checked");
-        sessionStorage.setItem(id, "true");
+  // Checkbox events
+  document.querySelectorAll('.item-checkbox').forEach(cb => {
+    cb.addEventListener('change', e => {
+      const id = cb.dataset.id;
+      const textEl = document.getElementById(id);
+      if(cb.checked) {
+        textEl.classList.add('checked');
+        checkedItems[id] = true;
       } else {
-        text.classList.remove("checked");
-        sessionStorage.setItem(id, "false");
+        textEl.classList.remove('checked');
+        delete checkedItems[id];
       }
     });
   });
 });
 
+// Export
 document.getElementById("export").addEventListener("click", () => {
-  let output = "Boodschappenlijst (niet-afgevinkte items)\n\n";
-  document.querySelectorAll(".section").forEach(sec => {
-    const cat = sec.querySelector("strong").innerText;
-    const lines = [...sec.querySelectorAll("li")]
-      .filter(li => !li.querySelector(".item-checkbox").checked)
-      .map(li => " - " + li.querySelector(".item-text").innerText);
-    if (lines.length > 0) output += `${cat}:\n${lines.join("\n")}\n\n`;
-  });
-
-  const blob = new Blob([output], {type:"text/plain"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = "boodschappenlijst.txt"; a.click();
-  URL.revokeObjectURL(url);
-
-  sessionStorage.clear();
+  const items = Array.from(document.querySelectorAll('.item-text'))
+                    .filter(i => !i.classList.contains('checked'))
+                    .map(i => i.textContent)
+                    .join('\n');
+  const blob = new Blob([items], {type: 'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'boodschappenlijst.txt';
+  a.click();
+  checkedItems = {};
+  document.querySelectorAll('.item-text').forEach(i => i.classList.remove('checked'));
+  document.querySelectorAll('.item-checkbox').forEach(cb => cb.checked = false);
 });
 </script>
 </body>
