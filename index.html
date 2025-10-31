@@ -85,18 +85,15 @@ h2 img.logo-header {
     position: relative;
     display: flex;
     flex-direction: column;
-    /* Extra padding zodat afbeelding altijd vrij staat */
-    padding-bottom: 200px;
+    padding-bottom: 200px; /* ruimte onder afbeelding */
 }
 
 .list-items-container {
-    /* Alle lijstitems in deze container */
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
-/* Inputs en buttons */
 label {
     font-weight: 700;
     display: block;
@@ -142,7 +139,6 @@ button:hover {
     box-shadow: 2px 2px 0px var(--color-text);
 }
 
-/* Shopping list items */
 .shopping-list .section {
     margin-bottom: 20px;
     padding-bottom: 8px;
@@ -182,7 +178,7 @@ button:hover {
 
 .shopping-list-image {
     position: absolute;
-    bottom: 10px;
+    bottom: 40px; /* hoger geplaatst zodat knop vrij blijft */
     left: 50%;
     transform: translateX(-50%) rotate(-3deg);
     width: 200px;
@@ -227,13 +223,27 @@ button:hover {
     padding: 10px 20px;
     position: absolute;
     right: 20px;
-    bottom: 60px;
+    bottom: 100px; /* boven afbeelding */
     z-index: 3;
     display: none;
 }
 
 #export:hover {
     background-color: #e04e3d;
+}
+
+/* Mobile fix */
+@media (max-width: 767px) {
+    .shopping-list {
+        padding-bottom: 250px;
+        padding-top: 20px;
+    }
+    .shopping-list-image {
+        bottom: 40px;
+    }
+    #export {
+        bottom: 100px;
+    }
 }
 </style>
 </head>
