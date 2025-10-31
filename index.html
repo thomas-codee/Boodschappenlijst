@@ -32,7 +32,6 @@ body {
     gap: 20px;
 }
 
-/* Containers voor desktop */
 @media (min-width: 768px) {
     body {
         flex-direction: row;
@@ -69,7 +68,6 @@ h2 img.logo-header {
     box-shadow: 6px 6px 0px var(--color-primary);
 }
 
-/* Shopping list box-shadow fix voor mobile */
 @media (min-width: 768px) {
     .shopping-list {
         box-shadow: -8px 8px 0px var(--color-secondary);
@@ -85,9 +83,18 @@ h2 img.logo-header {
     flex: 2;
     min-width: 250px;
     position: relative;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
+    max-height: 80vh; /* scrollbaar op mobile */
 }
 
+.shopping-list-inner {
+    overflow-y: auto;
+    padding-bottom: 80px; /* ruimte voor afbeelding en export */
+}
+
+/* Labels, inputs, buttons */
 label {
     font-weight: 700;
     display: block;
@@ -133,6 +140,7 @@ button:hover {
     box-shadow: 2px 2px 0px var(--color-text);
 }
 
+/* Shopping list items */
 .shopping-list .section {
     margin-bottom: 20px;
     padding-bottom: 8px;
@@ -172,7 +180,7 @@ button:hover {
 
 .shopping-list-image {
     position: absolute;
-    bottom: -15px;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%) rotate(-3deg);
     width: 200px;
@@ -183,7 +191,7 @@ button:hover {
     background: white;
     padding: 10px 10px 40px 10px;
     border: 1px solid #ccc;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
 }
 
 .check-item {
@@ -217,7 +225,7 @@ button:hover {
     padding: 10px 20px;
     position: absolute;
     right: 20px;
-    bottom: 20px;
+    bottom: 60px;
     z-index: 3;
     display: none;
 }
@@ -225,7 +233,6 @@ button:hover {
 #export:hover {
     background-color: #e04e3d;
 }
-
 </style>
 </head>
 <body>
@@ -251,7 +258,7 @@ button:hover {
 
 <div class="shopping-list">
   <h2>Boodschappenlijst! <img src="logo2.png" alt="Logo" class="logo-header"></h2>
-  <div id="list"></div>
+  <div class="shopping-list-inner" id="list"></div>
   <button id="export">📄 Exporteer boodschappenlijst</button>
   <img src="picture.jpg" alt="Decoratieve afbeelding" class="shopping-list-image">
 </div>
