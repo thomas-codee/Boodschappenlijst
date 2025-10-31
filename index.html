@@ -68,9 +68,12 @@ h2 img.logo-header {
     box-shadow: 6px 6px 0px var(--color-primary);
 }
 
-@media (min-width: 768px) {
+@media (max-width: 767px) {
+    body {
+        padding-bottom: 300px;
+    }
     .shopping-list {
-        box-shadow: -8px 8px 0px var(--color-secondary);
+        padding-bottom: 300px; /* extra ruimte voor afbeelding */
     }
 }
 
