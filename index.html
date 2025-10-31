@@ -13,205 +13,189 @@
 @import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Kalam:wght@300;400;700&display=swap');
 
 :root{
-  --color-primary: #5cb377;
-  --color-secondary: #ff6347;
-  --color-background: #fdf6e3;
-  --color-text: #2c3e50;
-  --font-heading: 'Cabin Sketch', cursive;
-  --font-body: 'Kalam', cursive;
+  --color-primary:#5cb377;
+  --color-secondary:#ff6347;
+  --color-background:#fdf6e3;
+  --color-text:#2c3e50;
+  --font-heading:'Cabin Sketch',cursive;
+  --font-body:'Kalam',cursive;
 }
 
 body{
-  font-family: var(--font-body);
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  background-color: var(--color-background);
-  color: var(--color-text);
-  min-height: 100vh;
-  gap: 20px;
+  font-family:var(--font-body);
+  display:flex;
+  flex-direction:column;
+  padding:20px;
+  background-color:var(--color-background);
+  color:var(--color-text);
+  min-height:100vh;
+  gap:20px;
 }
 
-@media (min-width: 768px){
-  body{ flex-direction: row; align-items: flex-start; gap: 40px; }
+@media (min-width:768px){
+  body{flex-direction:row;align-items:flex-start;gap:40px;}
 }
 
 h2{
-  font-family: var(--font-heading);
-  color: var(--color-secondary);
-  margin-top: 0;
-  margin-bottom: 20px;
-  font-size: 2.2em;
-  text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
-  border-bottom: 3px dashed var(--color-primary);
-  padding-bottom: 10px;
-  position: relative;
+  font-family:var(--font-heading);
+  color:var(--color-secondary);
+  margin-top:0;margin-bottom:20px;
+  font-size:2.2em;
+  text-shadow:2px 2px 0 rgba(0,0,0,0.1);
+  border-bottom:3px dashed var(--color-primary);
+  padding-bottom:10px;
+  position:relative;
 }
 
 h2 img.logo-header{
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 40px;
-  height: 40px;
+  position:absolute;
+  top:0;right:0;
+  width:40px;height:40px;
 }
 
-.controls, .shopping-list{
-  background: #fff;
-  padding: 20px;
-  border-radius: 20px;
-  border: 3px solid var(--color-text);
+.controls,.shopping-list{
+  background:#fff;
+  padding:20px;
+  border-radius:20px;
+  border:3px solid var(--color-text);
 }
 
 .controls{
-  flex: 1;
-  max-width: 100%;
-  box-shadow: 6px 6px 0 var(--color-primary);
+  flex:1;
+  max-width:100%;
+  box-shadow:6px 6px 0 var(--color-primary);
 }
 
 .shopping-list{
-  flex: 2;
-  min-width: 250px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  padding-bottom: 200px; /* ruimte voor decoratieve afbeelding */
-  box-shadow: -8px 8px 0 var(--color-secondary);
+  flex:2;
+  min-width:250px;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  box-shadow:-8px 8px 0 var(--color-secondary);
+  padding-bottom:150px;
 }
 
+/* labels en inputs */
 label{
-  font-weight: 700;
-  display: block;
-  margin-top: 15px;
-  margin-bottom: 5px;
-  font-size: 1.05em;
+  font-weight:700;
+  display:block;
+  margin-top:15px;
+  margin-bottom:5px;
+  font-size:1.05em;
 }
-
-input[type="text"], button{
-  font-family: var(--font-body);
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 12px;
-  font-size: 1em;
-  border: 3px solid var(--color-text);
-  border-radius: 10px;
-  box-sizing: border-box;
-  background-color: #fffaf0;
+input[type="text"],button{
+  font-family:var(--font-body);
+  width:100%;
+  padding:10px;
+  margin-bottom:12px;
+  font-size:1em;
+  border:3px solid var(--color-text);
+  border-radius:10px;
+  box-sizing:border-box;
+  background-color:#fffaf0;
 }
-
 input[type="text"]:focus{
-  border-color: var(--color-secondary);
-  box-shadow: 3px 3px 0 var(--color-secondary);
-  outline: none;
+  border-color:var(--color-secondary);
+  box-shadow:3px 3px 0 var(--color-secondary);
+  outline:none;
 }
 
 button{
-  background-color: var(--color-primary);
-  color: white;
-  border: 3px solid var(--color-text);
-  cursor: pointer;
-  font-weight: bold;
-  letter-spacing: 1px;
-  margin-top: 10px;
-  box-shadow: 4px 4px 0 var(--color-text);
-  transition: all .1s ease;
+  background-color:var(--color-primary);
+  color:white;
+  border:3px solid var(--color-text);
+  cursor:pointer;
+  font-weight:bold;
+  letter-spacing:1px;
+  margin-top:10px;
+  box-shadow:4px 4px 0 var(--color-text);
+  transition:all .1s ease;
 }
-
 button:hover{
-  background-color: #4ca067;
-  transform: translate(2px,2px);
-  box-shadow: 2px 2px 0 var(--color-text);
+  background-color:#4ca067;
+  transform:translate(2px,2px);
+  box-shadow:2px 2px 0 var(--color-text);
 }
 
 .shopping-list .section{
-  margin-bottom: 15px;
-  padding-bottom: 8px;
-  border-bottom: 2px dotted var(--color-primary);
+  margin-bottom:15px;
+  padding-bottom:8px;
+  border-bottom:2px dotted var(--color-primary);
 }
-
-.shopping-list .section:last-child{ border-bottom: none; }
-
+.shopping-list .section:last-child{border-bottom:none;}
 .shopping-list strong{
-  font-family: var(--font-heading);
-  font-size: 1.3em;
-  color: var(--color-primary);
+  font-family:var(--font-heading);
+  font-size:1.3em;
+  color:var(--color-primary);
 }
-
 .shopping-list ul{
-  list-style: none;
-  padding: 0;
-  margin: 8px 0 0 0;
+  list-style:none;
+  padding:0;margin:8px 0 0 0;
 }
-
 .shopping-list li{
-  padding: 5px 0;
-  border-bottom: 1px solid #eee;
-  margin-left: 10px;
-  position: relative;
+  padding:5px 0;
+  border-bottom:1px solid #eee;
+  margin-left:10px;
+  position:relative;
 }
-
 .shopping-list li::before{
-  content: '★';
-  color: var(--color-secondary);
-  font-size: 1em;
-  position: absolute;
-  left: -20px;
+  content:'★';
+  color:var(--color-secondary);
+  font-size:1em;
+  position:absolute;
+  left:-20px;
 }
 
-/* kleiner decoratief plaatje */
+/* decoratief plaatje */
 .shopping-list-image{
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%) rotate(-3deg);
-  width: 120px;
-  height: auto;
-  opacity: 0.9;
-  z-index: 1;
-  pointer-events: none;
-  background: white;
-  padding: 10px 10px 30px 10px;
-  border: 1px solid #ccc;
-  box-shadow: 4px 4px 12px rgba(0,0,0,0.2);
+  position:absolute;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%) rotate(-3deg);
+  width:120px;
+  height:auto;
+  opacity:0.9;
+  z-index:1;
+  pointer-events:none;
+  background:white;
+  padding:10px 10px 30px 10px;
+  border:1px solid #ccc;
+  box-shadow:4px 4px 12px rgba(0,0,0,0.2);
 }
 
 .check-item{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
 }
+.item-checkbox{transform:scale(1.3);accent-color:var(--color-primary);}
+.item-text{transition:background-color .3s,color .3s;padding:3px 6px;border-radius:8px;}
+.item-text.checked{background-color:#b4e0b4;color:#2c3e50;text-decoration:line-through;}
 
-.item-checkbox{ transform: scale(1.3); accent-color: var(--color-primary); cursor: pointer; }
-
-.item-text{
-  transition: background-color .3s, color .3s;
-  padding: 3px 6px;
-  border-radius: 8px;
-}
-.item-text.checked{
-  background-color: #b4e0b4;
-  color: #2c3e50;
-  text-decoration: line-through;
-}
-
-/* EXPORT knop - kleiner en rechts uitlijnen */
+/* Exportknop (zachte positionering) */
 #export{
-  margin-top: 10px;
-  margin-left: auto;      /* dwingt de knop naar rechts */
-  display: none;          /* zichtbaar na generate */
-  font-size: 0.78rem;     /* kleiner lettertype */
-  padding: 6px 10px;      /* kleinere padding */
-  height: auto;
-  line-height: 1;
-  border-radius: 8px;
+  align-self:flex-end;
+  font-size:0.8rem;
+  padding:6px 14px;
+  display:none;
+  border-radius:10px;
+  background-color:var(--color-primary);
+  color:white;
+  border:2px solid var(--color-text);
+  box-shadow:3px 3px 0 var(--color-text);
+  margin-bottom:10px;
+}
+#export:hover{
+  background-color:#4ca067;
+  transform:translate(1px,1px);
 }
 
-/* mobile adjustments */
-@media (max-width: 767px){
-  .shopping-list{ padding-bottom: 250px; padding-top: 12px; }
-  .shopping-list-image{ bottom: 20px; width: 100px; }
-  #export{ font-size: 0.75rem; padding: 5px 8px; }
+/* mobile tweaks */
+@media (max-width:767px){
+  .shopping-list{padding-bottom:250px;}
+  .shopping-list-image{width:100px;}
 }
 </style>
 </head>
@@ -219,38 +203,22 @@ button:hover{
 
 <div class="controls">
   <h2>Selecteer Je Maaltijden!</h2>
-
-  <label for="day1">Maandag</label>
-  <input type="text" list="day1List" id="day1" placeholder="Kies een recept..."><datalist id="day1List"></datalist>
-
-  <label for="day2">Dinsdag</label>
-  <input type="text" list="day2List" id="day2" placeholder="Kies een recept..."><datalist id="day2List"></datalist>
-
-  <label for="day3">Woensdag</label>
-  <input type="text" list="day3List" id="day3" placeholder="Kies een recept..."><datalist id="day3List"></datalist>
-
-  <label for="day4">Donderdag</label>
-  <input type="text" list="day4List" id="day4" placeholder="Kies een recept..."><datalist id="day4List"></datalist>
-
-  <label for="day5">Vrijdag</label>
-  <input type="text" list="day5List" id="day5" placeholder="Kies een recept..."><datalist id="day5List"></datalist>
-
-  <label for="day6">Zaterdag</label>
-  <input type="text" list="day6List" id="day6" placeholder="Kies een recept..."><datalist id="day6List"></datalist>
-
-  <label for="day7">Zondag</label>
-  <input type="text" list="day7List" id="day7" placeholder="Kies een recept..."><datalist id="day7List"></datalist>
-
+  <label for="day1">Maandag</label><input type="text" list="day1List" id="day1" placeholder="Kies een recept..."><datalist id="day1List"></datalist>
+  <label for="day2">Dinsdag</label><input type="text" list="day2List" id="day2" placeholder="Kies een recept..."><datalist id="day2List"></datalist>
+  <label for="day3">Woensdag</label><input type="text" list="day3List" id="day3" placeholder="Kies een recept..."><datalist id="day3List"></datalist>
+  <label for="day4">Donderdag</label><input type="text" list="day4List" id="day4" placeholder="Kies een recept..."><datalist id="day4List"></datalist>
+  <label for="day5">Vrijdag</label><input type="text" list="day5List" id="day5" placeholder="Kies een recept..."><datalist id="day5List"></datalist>
+  <label for="day6">Zaterdag</label><input type="text" list="day6List" id="day6" placeholder="Kies een recept..."><datalist id="day6List"></datalist>
+  <label for="day7">Zondag</label><input type="text" list="day7List" id="day7" placeholder="Kies een recept..."><datalist id="day7List"></datalist>
   <button id="generate">GO! Maak de Boodschappenlijst!</button>
 </div>
 
 <div class="shopping-list">
   <h2>Boodschappenlijst! <img src="logo.png" alt="Logo" class="logo-header"></h2>
-  <div class="list-items-container" id="list"></div>
   <button id="export">📄 Exporteer</button>
-  <img src="picture.jpg" alt="Decoratieve afbeelding" class="shopping-list-image">
+  <div class="list-items-container" id="list"></div>
+  <img src="picture.jpg" alt="Decoratief" class="shopping-list-image">
 </div>
-
 <script>
 // (Je JavaScript code blijft exact hetzelfde, maar met een kleine fix voor de template literals)
 
@@ -347,92 +315,108 @@ const recipes = {
     {name: "Wortels/doperwten", amount: 1, unit: "blik", category: "Groenten"},
     {name: "Aardappelen", amount: 1000, unit: "g", category: "Groenten"},
     {name: "Melk", amount: 500, unit: "ml", category: "Zuivel"}
-  ]
+  ],
+  "Volkoren penne met rode pesto schotel": [
+    {name: "Volkoren penne", amount: 300, unit: "g", category: "Rijst/Couscous/Pasta"},
+    {name: "Rode pesto", amount: 6, unit: "el", category: "Kruiden"},
+    {name: "Italiaanse roerbakgroenten", amount: 400, unit: "g", category: "Groenten"},
+    {name: "Tomaten", amount: 400, unit: "g", category: "Groenten"},
+    {name: "Geraspte kaas", amount: 70, unit: "g", category: "Zuivel"},
+    {name: "Kookroom", amount: 200, unit: "ml", category: "Zuivel"},
+    {name: "Kipgehakt", amount: 300, unit: "g", category: "Vlees/Vis"},
+    {name: "Zongedroogde tomaten in olie", amount: 280, unit: "g", category: "Groenten"},
+    {name: "Gedroogde Italiaanse kruiden", amount: 0.5, unit: "el", category: "Kruiden"}
+],
+"Kerrierijst met kip en sperziebonen": [
+    {name: "Langgraanrijst", amount: 300, unit: "g", category: "Koolhydraten"},
+    {name: "Kipfilet", amount: 300, unit: "g", category: "Vlees/Vis"},
+    {name: "Roomboter", amount: 25, unit: "g", category: "Zuivel"},
+    {name: "Kerriepoeder", amount: 1, unit: "el", category: "Kruiden"},
+    {name: "Crème fraîche", amount: 200, unit: "g", category: "Zuivel"},
+    {name: "Sperziebonen", amount: 600, unit: "g", category: "Groenten"}
+],
+"Vissticks Massaman Curry": [
+    {name: "Vissticks", amount: 15, unit: "stuks", category: "Vlees/Vis"},
+    {name: "Massaman-currypasta", amount: 1, unit: "pakje", category: "Kruiden"},
+    {name: "Kokosmelk", amount: 400, unit: "ml", category: "Zuivel"},
+    {name: "Sperziebonen (diepvries)", amount: 450, unit: "g", category: "Groenten"},
+    {name: "Wortelblokjes", amount: 200, unit: "g", category: "Groenten"},
+    {name: "Rode ui", amount: 150, unit: "g", category: "Groenten"},
+    {name: "Citroen", amount: 1, unit: "stuk", category: "Groenten"},
+    {name: "Basmatirijst", amount: 300, unit: "g", category: "Rijst/Couscous/Pasta"}
+],
+"Spaghetti alla Carbonara": [
+    {name: "Spaghetti", amount: 300, unit: "g", category: "Rijst/Couscous/Pasta"},
+    {name: "Spekjes", amount: 200, unit: "g", category: "Vlees/Vis"},
+    {name: "Pecorino Romano", amount: 90, unit: "g", category: "Zuivel"},
+    {name: "Middelgrote scharreleieren", amount: 4, unit: "stuk", category: "Vlees/Vis"}
+]
 };
 
-const days = ["day1","day2","day3","day4","day5","day6","day7"];
-const recipeNames = Object.keys(recipes);
-
-// Populate datalists
-days.forEach(day => {
-  const dataList = document.getElementById(day + "List");
-  recipeNames.forEach(r => {
-    const option = document.createElement("option");
-    option.value = r;
-    dataList.appendChild(option);
+const days=["day1","day2","day3","day4","day5","day6","day7"];
+const recipeNames=Object.keys(recipes);
+days.forEach(d=>{
+  const dl=document.getElementById(d+"List");
+  recipeNames.forEach(r=>{
+    const opt=document.createElement("option");
+    opt.value=r;
+    dl.appendChild(opt);
   });
-  document.getElementById(day).value = "";
+  document.getElementById(d).value="";
 });
+let checkedItems={};
 
-let checkedItems = {}; // Session memory
-
-function generateList() {
-  const selected = days.map(d => {
-    const val = document.getElementById(d).value.trim();
-    return val === "" ? "Geen" : val;
-  });
-
-  const aggregated = {};
-  selected.forEach(r => {
-    if(r === "Geen") return;
-    recipes[r].forEach(item => {
-      const key = item.name + " (" + item.unit + ")";
-      if (!aggregated[item.category]) aggregated[item.category] = {};
-      if (!aggregated[item.category][key]) aggregated[item.category][key] = 0;
-      aggregated[item.category][key] += item.amount;
+function generateList(){
+  const selected=days.map(d=>(document.getElementById(d).value||"").trim()||"Geen");
+  const aggregated={};
+  selected.forEach(r=>{
+    if(r==="Geen")return;
+    recipes[r].forEach(item=>{
+      const key=item.name+" ("+item.unit+")";
+      if(!aggregated[item.category])aggregated[item.category]={};
+      if(!aggregated[item.category][key])aggregated[item.category][key]=0;
+      aggregated[item.category][key]+=item.amount;
     });
   });
-
-  let html = "";
-  Object.keys(aggregated).forEach(category => {
-    html += `<div class="section"><strong>${category}</strong><ul>`; 
-    Object.keys(aggregated[category]).forEach(i => {
-      const unitMatch = i.match(/\((.*)\)/);
-      const unit = unitMatch ? unitMatch[1] : ''; 
-      const id = i.replace(/\s+/g, '_');
-      const checked = checkedItems[id] ? 'checked' : '';
-      const textClass = checkedItems[id] ? 'item-text checked' : 'item-text';
-      html += `<li class="check-item">
-                 <input type="checkbox" class="item-checkbox" data-id="${id}" ${checked}>
-                 <span class="${textClass}" id="${id}">${i.split(" (")[0]}: ${aggregated[category][i]} ${unit}</span>
-               </li>`;
+  let html="";
+  Object.keys(aggregated).forEach(cat=>{
+    html+=`<div class="section"><strong>${cat}</strong><ul>`;
+    Object.keys(aggregated[cat]).forEach(k=>{
+      const id=k.replace(/\s+/g,'_');
+      const unitMatch=k.match(/\((.*)\)/);
+      const unit=unitMatch?unitMatch[1]:'';
+      const checked=checkedItems[id]?'checked':'';
+      const textClass=checkedItems[id]?'item-text checked':'item-text';
+      html+=`<li class="check-item"><input type="checkbox" class="item-checkbox" data-id="${id}" ${checked}><span id="${id}" class="${textClass}">${k.split(" (")[0]}: ${aggregated[cat][k]} ${unit}</span></li>`;
     });
-    html += `</ul></div>`;
+    html+=`</ul></div>`;
   });
-
-  document.getElementById("list").innerHTML = html;
-  document.getElementById("export").style.display = "block";
-
-  document.querySelectorAll('.item-checkbox').forEach(cb => {
-    cb.addEventListener('change', e => {
-      const id = cb.dataset.id;
-      const textEl = document.getElementById(id);
-      if(cb.checked) {
-        textEl.classList.add('checked');
-        checkedItems[id] = true;
-      } else {
-        textEl.classList.remove('checked');
-        delete checkedItems[id];
-      }
+  document.getElementById("list").innerHTML=html;
+  document.getElementById("export").style.display="inline-block";
+  document.querySelectorAll('.item-checkbox').forEach(cb=>{
+    cb.addEventListener('change',()=>{
+      const id=cb.dataset.id;
+      const text=document.getElementById(id);
+      if(cb.checked){text.classList.add('checked');checkedItems[id]=true;}
+      else{text.classList.remove('checked');delete checkedItems[id];}
     });
   });
 }
 
-document.getElementById("generate").addEventListener("click", generateList);
+document.getElementById("generate").addEventListener("click",generateList);
 
-document.getElementById("export").addEventListener("click", () => {
-  const items = Array.from(document.querySelectorAll('.item-text'))
-                    .filter(i => !i.classList.contains('checked'))
-                    .map(i => i.textContent)
-                    .join('\n');
-  const blob = new Blob([items], {type: 'text/plain'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'boodschappenlijst.txt';
+document.getElementById("export").addEventListener("click",()=>{
+  let items=Array.from(document.querySelectorAll('.item-text'))
+    .filter(i=>!i.classList.contains('checked'))
+    .map(i=>i.textContent).join('\n');
+  const blob=new Blob([items],{type:'text/plain'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='boodschappenlijst.txt';
   a.click();
-  checkedItems = {};
-  document.querySelectorAll('.item-text').forEach(i => i.classList.remove('checked'));
-  document.querySelectorAll('.item-checkbox').forEach(cb => cb.checked = false);
+  checkedItems={};
+  document.querySelectorAll('.item-text').forEach(t=>t.classList.remove('checked'));
+  document.querySelectorAll('.item-checkbox').forEach(cb=>cb.checked=false);
 });
 </script>
 </body>
