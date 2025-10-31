@@ -44,6 +44,15 @@
     text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
     border-bottom: 3px dashed var(--color-primary);
     padding-bottom: 10px;
+    position: relative;
+  }
+
+  h2 img.logo-header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
   }
 
   .controls {
@@ -215,7 +224,7 @@
     right: 30px;
     bottom: 30px;
     z-index: 3;
-    display: none; /* Verborgen tot lijst gegenereerd is */
+    display: none;
   }
 
   #export:hover {
@@ -227,21 +236,28 @@
 
 <div class="controls">
   <h2>Selecteer Je Maaltijden!</h2>
-  <label for="day1">Maandag</label><input type="text" list="day1List" id="day1"><datalist id="day1List"></datalist>
-  <label for="day2">Dinsdag</label><input type="text" list="day2List" id="day2"><datalist id="day2List"></datalist>
-  <label for="day3">Woensdag</label><input type="text" list="day3List" id="day3"><datalist id="day3List"></datalist>
-  <label for="day4">Donderdag</label><input type="text" list="day4List" id="day4"><datalist id="day4List"></datalist>
-  <label for="day5">Vrijdag</label><input type="text" list="day5List" id="day5"><datalist id="day5List"></datalist>
-  <label for="day6">Zaterdag</label><input type="text" list="day6List" id="day6"><datalist id="day6List"></datalist>
-  <label for="day7">Zondag</label><input type="text" list="day7List" id="day7"><datalist id="day7List"></datalist>
+  <label for="day1">Maandag</label>
+  <input type="text" list="day1List" id="day1" placeholder="Kies een recept..."><datalist id="day1List"></datalist>
+  <label for="day2">Dinsdag</label>
+  <input type="text" list="day2List" id="day2" placeholder="Kies een recept..."><datalist id="day2List"></datalist>
+  <label for="day3">Woensdag</label>
+  <input type="text" list="day3List" id="day3" placeholder="Kies een recept..."><datalist id="day3List"></datalist>
+  <label for="day4">Donderdag</label>
+  <input type="text" list="day4List" id="day4" placeholder="Kies een recept..."><datalist id="day4List"></datalist>
+  <label for="day5">Vrijdag</label>
+  <input type="text" list="day5List" id="day5" placeholder="Kies een recept..."><datalist id="day5List"></datalist>
+  <label for="day6">Zaterdag</label>
+  <input type="text" list="day6List" id="day6" placeholder="Kies een recept..."><datalist id="day6List"></datalist>
+  <label for="day7">Zondag</label>
+  <input type="text" list="day7List" id="day7" placeholder="Kies een recept..."><datalist id="day7List"></datalist>
   <button id="generate">GO! Maak de Boodschappenlijst!</button>
 </div>
 
 <div class="shopping-list">
-  <h2>Boodschappenlijst!</h2>
+  <h2>Boodschappenlijst! <img src="logo2.png" alt="Logo" class="logo-header"></h2>
   <div id="list"></div>
   <button id="export">📄 Exporteer boodschappenlijst</button>
-  <img src="picture.jpg" alt="Decoratieve afbeelding" class="shopping-list-image">
+  <img src="logo2.png" alt="Decoratieve afbeelding" class="shopping-list-image">
 </div>
 
 <script>
@@ -343,7 +359,6 @@ const recipes = {
   ]
 };
 
-// Datalists vullen
 const days = ["day1","day2","day3","day4","day5","day6","day7"];
 const recipeNames = Object.keys(recipes);
 days.forEach(day => {
@@ -400,19 +415,25 @@ document.getElementById("generate").addEventListener("click", () => {
   });
 });
 
-// Export .txt
+// Export .txt en wis vinkjes uit sessionStorage
 document.getElementById("export").addEventListener("click", () => {
   let output = "Boodschappenlijst (niet-afgevinkte items)\n\n";
   document.querySelectorAll(".section").forEach(sec => {
     const cat = sec.querySelector("strong").innerText;
-    const lines = [...sec.querySelectorAll("li")].filter(li => !li.querySelector(".item-checkbox").checked).map(li => " - " + li.querySelector(".item-text").innerText);
+    const lines = [...sec.querySelectorAll("li")]
+      .filter(li => !li.querySelector(".item-checkbox").checked)
+      .map(li => " - " + li.querySelector(".item-text").innerText);
     if (lines.length > 0) output += `${cat}:\n${lines.join("\n")}\n\n`;
   });
+
   const blob = new Blob([output], {type:"text/plain"});
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url; a.download = "boodschappenlijst.txt"; a.click();
   URL.revokeObjectURL(url);
+
+  // 🧹 Wis vinkstatus na export
+  sessionStorage.clear();
 });
 </script>
 </body>
